@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'recipes/stylesheet.css' %}">
+    <!-- <script
+    src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script> -->
+    <title>RECIPES</title>
+  </head>
+  <body>
+    <div>
+      <div  class="header">
+		<img src="{% static 'css/icon.png' %}" alt="kkk">
+			<h1>This is header<h1>
+			<div><a href="#"><u>Home</u></a>
+        {% if user.is_authenticated %}
+        <a href="#"><u>Log out</a></u></div>
+        {% endif %}
+      </div>
+	  </div>
+
+      <div id="content", class="content">
+        {% block content %}
+        {% endblock %}
+      </div>
+      
+      <footer class="footer">
+		This is footer
+		<h3><a href="#" target="_blank">GitHub Repository</h3>
+      </footer>
+    </div>
+  </body>
+  {% block scripts %}
+  {% endblock %}
+</html>

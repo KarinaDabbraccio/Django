@@ -1,0 +1,16 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'pastries/style.css' %}">
+
+<p> KARINA</p>
+<h1>categories</h1>
+{% if categories %}
+    <ul>
+    {% for category in categories %}
+
+		{{ category.name }} <br>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No categories are available.</p>
+{% endif %}
