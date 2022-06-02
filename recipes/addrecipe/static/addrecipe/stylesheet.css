@@ -3,6 +3,10 @@ li a {
 }
 
 body {
-	background: grey;
+	background: honeydew;
    /* background: yellow url("images/bbb.jpg") no-repeat;*/
+}
+
+h1{
+	font-family: 'Peralta', cursive;
 }

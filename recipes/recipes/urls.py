@@ -20,9 +20,21 @@ from . import views
 from django.urls import include, path
 
 
-urlpatterns = [
 
-    path('', views.index, name='index'),
+urlpatterns = [
+    path('', views.home, name='home'),
     path('addrecipe/', include('addrecipe.urls')),
     path('admin/', admin.site.urls),
+    
 ]
+
+"""
+
+url(r'^$', views.home, name='home'),
+    url(r'^addrecipe/(?P<pk>\d+)/$', views.category_recipes, name='category_recipes'),
+    url(r'^admin/', admin.site.urls),
+
+
+
+
+"""

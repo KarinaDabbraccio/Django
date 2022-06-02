@@ -3,34 +3,35 @@
   <head>
     <meta charset="utf-8">
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'recipes/stylesheet.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'addrecipe/stylesheet.css' %}">
+	 <link href="https://fonts.googleapis.com/css?family=Peralta" rel="stylesheet">
     <!-- <script
     src="https://code.jquery.com/jquery-3.3.1.min.js"
     integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
     crossorigin="anonymous"></script> -->
-    <title>RECIPES</title>
+    <title>{% block title %}RECIPES{% endblock %}</title>
   </head>
   <body>
     <div>
       <div  class="header">
 		<img src="{% static 'css/icon.png' %}" alt="kkk">
-			<h1>This is header<h1>
-			<div><a href="#"><u>Home</u></a>
-        {% if user.is_authenticated %}
-        <a href="#"><u>Log out</a></u></div>
-        {% endif %}
+		<h1>This is header Recipes</h1>
+			
+			{% if user.is_authenticated %}
+			<p><a href="#">Log out</a></p>
+			{% endif %}
       </div>
 	  </div>
 
-      <div id="content", class="content">
+      <div id="container", class="container">
         {% block content %}
+        {% endblock %}
+		
+		{% block content-2 %}
         {% endblock %}
       </div>
       
-      <footer class="footer">
-		This is footer
-		<h3><a href="#" target="_blank">GitHub Repository</h3>
-      </footer>
+      {% include "footer.html" %}
     </div>
   </body>
   {% block scripts %}

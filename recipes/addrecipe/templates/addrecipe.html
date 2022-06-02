@@ -1,16 +1,49 @@
+{% extends 'base.html'%}
 {% load static %}
+
+{% block content %}
 
 <link rel="stylesheet" type="text/css" href="{% static 'pastries/style.css' %}">
 
 <p> KARINA</p>
 <h1>categories</h1>
 {% if categories %}
-    <ul>
+<table>
+  <thead>
+    <tr>
+      <th>Category</th>
+      <th>Comments</th>
+	  <th>Recipes</th>
+      <th>Last Upd</th>
+    </tr>
+  </thead>
+    <tbody>
     {% for category in categories %}
 
-		{{ category.name }} <br>
+		<tr>
+      <td>
+        <a href="{% url 'addrecipe:category_recipes' category.pk %}">{{ category.name }}</a>
+        <small class="">{{ category.description }}</small>
+      </td>
+      <td class="">.0.</td>
+      <td class="">.1.</td>
+      <td>.2.</td>
+    </tr>
+		
     {% endfor %}
-    </ul>
+    </tbody>
 {% else %}
     <p>No categories are available.</p>
 {% endif %}
+
+{% endblock %}
+
+
+{% block content-2 %}
+{% endblock %}
+
+{% block scripts %}
+    <!--
+	<script type="text/javascript" src="{% static 'javascript/somefunc.js' %}"></script> 
+	-->
+{% endblock %}

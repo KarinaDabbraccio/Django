@@ -1,0 +1,43 @@
+{% extends 'base.html'%}
+{% load static %}
+
+{%block title %}
+  {{ category.name }} - new recipe
+{% endblock %}
+
+{% block content %}
+  <p class="breadcrumb-item"><a href="{% url 'home' %}">Categories</a></p>
+  <p class="breadcrumb-item"><a href="{% url 'addrecipe:category_recipes' category.pk %}">{{ category.name }}</a></p>
+  <p class="">New recipe</p>
+  <br>
+{% endblock %}
+
+
+{% block content-2 %}
+<form method="post">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="id_subject">Title</label>
+      <input type="text" class="form-control" id="id_subject" name="subject">
+    </div>
+	<div class="form-group">
+      <label for="id_subject">Cooking time</label>
+      <input type="text" class="" id="id_cooktime" name="cooktime">
+    </div>
+	<div class="form-group">
+      <label for="id_subject">Low Sugar</label>
+      <input type="checkbox" class="" id="id_lowsugar" name="lowsugar">
+    </div>
+    <div class="form-group">
+      <label for="id_message">Description</label>
+      <textarea class="" id="id_description" name="description" rows="5"></textarea>
+    </div>
+    <button type="submit" class="btn btn-success">Submit</button>
+  </form>
+{% endblock %}
+   
+{% block scripts %}
+    <!--
+	<script type="text/javascript" src="{% static 'javascript/somefunc.js' %}"></script> 
+	-->    
+{% endblock %}
