@@ -32,7 +32,10 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     # add addrecipe:
-    'addrecipe.apps.AddrecipeConfig',    
+    'addrecipe.apps.AddrecipeConfig', 
+    
+    # add accounts:
+    'accounts',
         
     'django.contrib.admin',
     'django.contrib.auth',
@@ -126,3 +129,14 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+#add for logout and login redirect
+LOGOUT_REDIRECT_URL = 'home'
+
+LOGIN_REDIRECT_URL = 'home'
+
+#email for password reset to console
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+LOGIN_URL = 'login'
+

@@ -25,7 +25,6 @@ class Recipe(models.Model):
         that belong to it.
         """
     subject = models.CharField(max_length=100)
-    lowsugar = models.BooleanField();
     cooking_time = models.IntegerField();
     rec_description = models.CharField(max_length=1000)
     last_updated = models.DateTimeField(auto_now_add=True)

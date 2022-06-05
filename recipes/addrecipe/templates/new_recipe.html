@@ -16,22 +16,8 @@
 {% block content-2 %}
 <form method="post">
     {% csrf_token %}
-    <div class="form-group">
-      <label for="id_subject">Title</label>
-      <input type="text" class="form-control" id="id_subject" name="subject">
-    </div>
-	<div class="form-group">
-      <label for="id_subject">Cooking time</label>
-      <input type="text" class="" id="id_cooktime" name="cooktime">
-    </div>
-	<div class="form-group">
-      <label for="id_subject">Low Sugar</label>
-      <input type="checkbox" class="" id="id_lowsugar" name="lowsugar">
-    </div>
-    <div class="form-group">
-      <label for="id_message">Description</label>
-      <textarea class="" id="id_description" name="description" rows="5"></textarea>
-    </div>
+    <div class = "forms"> 
+	{{ form.as_p }} </div>
     <button type="submit" class="btn btn-success">Submit</button>
   </form>
 {% endblock %}
