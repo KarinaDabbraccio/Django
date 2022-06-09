@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}My account{% endblock %}
+
+
+{% block content %}
+<br>
+<form class="centered" method="post" novalidate >
+    {% csrf_token %}
+    {{ form.as_p }}
+    <p class="centered_text"><button type="submit">Save changes</button></p>
+</form>
+
+{% endblock %}

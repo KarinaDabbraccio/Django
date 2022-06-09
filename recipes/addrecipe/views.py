@@ -1,29 +1,20 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
-from django.http import HttpResponse
 from .models import Category, Recipe, Comment
-from .forms import NewRecipeForm
+from .forms import NewRecipeForm, CommentForm
 from django.contrib.auth.decorators import login_required
+from django.db.models import Count
 
 
-def addrecipe(request):
-    #return HttpResponse("Hello, world. You're at the ADDRECIPE index.")
-    
+
+def addrecipe(request):   
     categories = Category.objects.all()
-    """ categories_names = list()
-
-    for category in categories:
-        categories_names.append(category.name)
-
-    response_html = '<br>'.join(categories_names)
-
-    return HttpResponse(response_html)"""
-
     return render(request, 'addrecipe.html', {'categories': categories})
 
 def category_recipes(request, pk):
     category = get_object_or_404(Category, pk=pk)
-    return render(request, 'recipes.html', {'category': category})
+    recipes = category.recipes.order_by('-last_updated').annotate(replies=Count('comments'))
+    return render(request, 'recipes.html', {'category': category, 'recipes': recipes})
 
 @login_required
 def new_recipe(request, pk):
@@ -42,9 +33,32 @@ def new_recipe(request, pk):
                 topic=topic,
                 created_by=request.user
             )"""
-            return redirect('addrecipe:category_recipes', pk=category.pk)  # TODO: redirect to the created topic page
+            return redirect('addrecipe:recipe_comments', pk=pk, recipe_pk=recipe.pk)
     else:
         form = NewRecipeForm()
 
 
     return render(request, 'new_recipe.html', {'category': category, 'form': form})
+
+def recipe_comments(request, pk, recipe_pk):
+    recipe = get_object_or_404(Recipe, category__pk=pk, pk=recipe_pk)
+    recipe.views += 1
+    recipe.save()
+    return render(request, 'recipe_comments.html', {'recipe': recipe})
+
+@login_required
+def reply_recipe(request, pk, recipe_pk):
+    recipe = get_object_or_404(Recipe, category__pk=pk, pk=recipe_pk)
+    
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.recipe = recipe
+            comment.created_by = request.user
+            comment.save()
+            return redirect('addrecipe:recipe_comments', pk=pk, recipe_pk=recipe_pk)
+    else:
+        form = CommentForm()
+    return render(request, 'reply_recipe.html', {'recipe': recipe, 'form': form})
+

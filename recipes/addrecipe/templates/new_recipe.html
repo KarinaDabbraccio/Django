@@ -6,10 +6,17 @@
 {% endblock %}
 
 {% block content %}
-  <p class="breadcrumb-item"><a href="{% url 'home' %}">Categories</a></p>
-  <p class="breadcrumb-item"><a href="{% url 'addrecipe:category_recipes' category.pk %}">{{ category.name }}</a></p>
-  <p class="">New recipe</p>
-  <br>
+<h2>New recipe</h2>
+<nav class="navbutton">
+	<ul>
+	  <li><a href="{% url 'addrecipe:addrecipe' %}">All categories</a></li>
+	  <li><a href="{% url 'addrecipe:category_recipes' category.pk %}">{{ category.name }}</a></li>
+	</ul>
+</nav>
+<p class="breadcrumb-item">File : new_recipe</p>
+ 
+  
+
 {% endblock %}
 
 
@@ -18,7 +25,7 @@
     {% csrf_token %}
     <div class = "forms"> 
 	{{ form.as_p }} </div>
-    <button type="submit" class="btn btn-success">Submit</button>
+    <button type="submit">Submit</button>
   </form>
 {% endblock %}
    

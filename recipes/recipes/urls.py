@@ -55,6 +55,11 @@ urlpatterns = [
     
     #logout:
     url(r'^logout/$', auth_views.LogoutView.as_view(), name='logout'),
+    
+    #my account:
+    url(r'^settings/account/$', accounts_views.UserUpdateView.as_view(), name='my_account'),
+
+    #my app: addrecipe, admin page
     path('addrecipe/', include('addrecipe.urls')),
     path('admin/', admin.site.urls),
     

@@ -1,47 +1,25 @@
 {% extends 'base.html'%}
+
 {% block head %}
     {% load static %}
+{% endblock %}
 
-    {% endblock %}
-    {% block content %}
-	  	  
-      <nav class="index-nav">
-        <ul>
-          <li><a href="/addrecipe/" target="_blank">ADD REc</a></li>
-          <li>Item 1</li>
-          <li>Item 2</li>
-          <li>Item 3</li>
-          <ul>
-			<table>
-				<tr>
-					<td>Search</td>
-					<td>td</td>
-				</tr>
-				<tr>
-					<td>Search</td>
-					<td>td</td>
-				</tr>
-				<tr>
-					<td>Search</td>
-					<td>td</td>
-				</tr>
-				<tr>
-					<td>Search</td>
-					<td>td</td>
-				</tr>
-		  </table>
-		  </ul>
-		  </li>
-			
+{% block content %}
+<div class="content">
+	<br>  	  
+    <nav class="navbar">
+	  <p>File : home</p><br>
+      <p><a href="addrecipe" target="_blank">Recipes (addrecipe app)</a></li>
+    </nav>
+</div>
+{% endblock %}
 
-        </ul>
-      </nav>
+{% block footer %}
+{% include "footer.html" %}	
+{% endblock %}	
 
-
-    {% endblock %}
-    {% block scripts %}
+{% block scripts %}
     <!--
 	<script type="text/javascript" src="{% static 'javascript/somefunc.js' %}"></script> 
-	-->
-    
-    {% endblock %}
+	-->  
+{% endblock %}

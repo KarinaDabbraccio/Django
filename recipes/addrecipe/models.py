@@ -15,6 +15,12 @@ class Category(models.Model):
     
     def __str__(self):
         return self.name
+    
+    def get_comments_count(self):
+        return Comment.objects.filter(recipe__category=self).count()
+
+    def get_last_comment(self):
+        return Comment.objects.filter(recipe__category=self).order_by('-created_at').first()
 
 
 class Recipe(models.Model):
@@ -25,11 +31,15 @@ class Recipe(models.Model):
         that belong to it.
         """
     subject = models.CharField(max_length=100)
-    cooking_time = models.IntegerField();
+    cooking_time = models.PositiveIntegerField();
     rec_description = models.CharField(max_length=1000)
     last_updated = models.DateTimeField(auto_now_add=True)
     category = models.ForeignKey(Category, related_name='recipes', on_delete=models.CASCADE)
     starter = models.ForeignKey(User, related_name='recipes', on_delete=models.CASCADE)
+    views = models.PositiveIntegerField(default=0)
+    
+    def __str__(self):
+        return self.subject
 
 
 class Comment(models.Model):
@@ -38,7 +48,7 @@ class Comment(models.Model):
         The updated_by field sets the related_name='+' - we don’t need this 
         reverse relationship, so it will be ignored.
         """
-    message = models.TextField(max_length=4000)
+    message = models.CharField(max_length=500)
     recipe = models.ForeignKey(Recipe, related_name='comments', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(null=True)
