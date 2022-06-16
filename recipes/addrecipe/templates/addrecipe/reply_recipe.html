@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Reply{% endblock %}
+
+{% block content %}
+  <h2>New Comment: {{ recipe.subject }}</h2>
+  
+  <nav class="navbutton">
+    <ul>
+	  <li><a href="{% url 'addrecipe:add_recipe' %}">All categories</a></li>
+	  <li><a href="{% url 'addrecipe:category_recipes' recipe.category.pk %}">{{ recipe.category.name }}</a></li>
+	  <li><a href="{% url 'addrecipe:recipe_comments' recipe.category.pk recipe.pk %}">{{ recipe.subject }}</a></li>
+    </ul>
+  </nav>
+  <p>File : reply_recipe</p>
+  <p>{{ recipe.rec_description }}</p>
+{% endblock %}
+
+{% block content-2 %}
+
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Post a reply</button>
+  </form>
+
+  {% for comment in recipe.comments.all %}
+    <div class="grid-card">
+      <div class="fl_l">
+	    <div class="side_l">
+          <img src="{% static 'addrecipe/images/userr.png' %}" alt="{{ comment.created_by.username }}">
+		  <p class="small-txt">{{ comment.created_by.username }}<br> Comments: {{ comment.created_by.comments.count }}</p>
+        </div>
+	  </div><div class="fl_r"><p class="small-txt side_r">{{ comment.created_at }}</p></div>
+      <div class="middle">
+        <p>{{ comment.message }}</p>
+        {% if comment.created_by == user %}
+        <p><a href="{% url 'addrecipe:reply_recipe' recipe.category.pk recipe.pk %}" class="small_btn">Reply</a></p>
+        {% endif %}
+	  </div>
+	</div>
+  {% endfor %}
+<div class="spaces"></div>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block title %}Products{% endblock %}
+{% block content %}
+
+<br>  	  
+<p>File : products_all</p>
+<br>
+
+{% if groups %}
+
+	<div class="card-container card-2">
+	{% for group in groups %}
+	<div class="grid-card-product card-group">
+		<div class="grid-img group-img grid-row"><a href="{% url 'products:group_products' group.pk %}">
+			<img class="grid-img" src="{{ group.pic.url }}">
+		</a></div>
+		<div class="grid-row centered_text"><a href="{% url 'products:group_products' group.pk %}"><h3>{{ group.name }}</h3></a></div>
+		<div>{{ group.get_products_count }} products</div>
+	</div>
+	{% endfor %}
+	</div>
+{% else %}
+    <p>No categories are available.</p>
+{% endif %}
+
+{% endblock %}

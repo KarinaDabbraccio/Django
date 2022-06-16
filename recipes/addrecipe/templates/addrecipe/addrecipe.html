@@ -1,0 +1,52 @@
+{% extends 'base.html'%}
+
+{% block head %}
+    {% load static %}
+{% endblock %}
+
+{% block content %}
+  <h2>Categories</h2>
+  <p>File : addrecipe</p>
+  <p>Here the categories for the recipes will be posted. Categories are created by admin only.</p>
+  <p><a href="https://www.transamericainstitute.org/health-wellness/cookbooks?gclid=CjwKCAjw7vuUBhBUEiwAEdu2pJzOr7lphMU6at7dHCa_aRMGVJQlo9gEXOs3zVK746z8qFf65tNgFhoCQ1UQAvD_BwE">This book</a></p>
+  {% if categories %}
+  <table>
+    <thead>
+      <tr>
+        <th>Category</th>
+        <th>Recipes</th>
+	    <th>Comments</th>
+        <th>Last Updated</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for category in categories %}
+	<tr>
+      <td>
+        <a href="{% url 'addrecipe:category_recipes' category.pk %}">{{ category.name }}</a>
+        <small class="">{{ category.description }}</small>
+      </td>
+	  <td class="centered_text">{{ category.recipes.count }}</td>
+      <td class="centered_text">{{ category.get_comments_count }}</td>
+      <td>
+	    {% with comment=category.get_last_comment %}
+            {% if comment %}
+			  <small>
+				<a href="{% url 'addrecipe:recipe_comments' category.pk comment.recipe.pk %}">
+				By {{ comment.created_by.username }} at {{ comment.created_at }}
+				</a>
+			  </small>
+			{% else %}
+			  <small>
+				<em>No comments yet.</em>
+			  </small>
+			{% endif %}
+        {% endwith %}
+	  </td>
+    </tr>		
+    {% endfor %}
+    </tbody>
+{% else %}
+    <p>No categories are available.</p>
+{% endif %}
+{% endblock %}

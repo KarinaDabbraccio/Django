@@ -1,0 +1,249 @@
+body {
+	background: #FDFFFB;
+	font-family: Verdana;
+	color: #450a0a;
+	line-height:1.5em;
+   /* background: yellow url("images/bbb.jpg") no-repeat;*/
+}
+
+html,body{
+	height: 100%;
+}
+
+.fl_l{
+	float:left;
+}
+.fl_r{
+	float:right;
+	}
+	
+.clearfix:after{
+	content:"";
+	clear:both;
+	display:block;
+}
+
+.content {
+	max-width:960px;
+	margin:10px auto;
+	}
+	
+.centered {
+	margin:0 auto;
+	}
+
+.centered_text{
+	text-align:center;
+}	
+
+/* --------------------------Base.html: header, footer ---*/
+header, footer {
+	background: darkolivegreen; /* #556B2F */
+	color:ivory;
+	padding-top:12px;
+	font-family: 'Quicksand', sans-serif; 
+	
+}
+
+.spaces{
+	height:30px;
+}
+
+.spaces3{
+	height:90px;
+}
+
+header img {
+	max-width: 10%;
+	padding-right:12px; 
+}
+
+h1{	
+	font-size:36px;
+}
+
+footer{
+	font-size:18px; 
+	padding-bottom:12px;
+	position:absolute;
+	width: 100%;
+    bottom:0;
+    height:60px;
+
+}
+
+h2, h3{
+	font-family: 'Quicksand', sans-serif;
+	color: darkolivegreen;
+}
+
+h2{	
+	font-size:30px;
+	padding:15px 10px 15px 30px;
+}
+
+h3{
+	font-size:22px;
+	padding:0px 10px 20px 30px;
+}
+
+.small-txt{
+	font-size:0.7em;
+}
+	
+.navbar ul {
+	text-align:center;
+}
+
+li{
+	display:inline-block;
+}
+
+.navbar {
+	font-size:22px;
+}
+	
+.navbar li a{
+	padding:12px;
+	text-decoration:none;
+	display:block;
+	color:ivory;
+}	
+
+.navbutton ul{
+	margin: 30px 0;
+}
+
+.navbutton ul li{
+	margin-right: 12px;
+}
+
+.navbutton li a{
+	padding:10px;
+	text-decoration:none;
+	background: darkolivegreen;
+	border-radius: 5px;
+	color:ivory;		
+}
+
+.navbutton li a:hover{
+	background: olivedrab;	
+}
+/*-------------------------- Links ---------- */
+a.lighttext:visited {
+    color: ivory;
+}
+
+a.lighttext:active {
+  color: green;
+}
+
+a.lighttext:hover {
+  color: wheat;
+}
+
+a:link {
+    color: darkgreen;
+}
+
+a:visited {
+    color: #224422;
+}
+
+a:active {
+  color: lime;
+}
+
+a:hover {
+  color: green;
+}
+
+/*-------------------------- Tables ---------- */
+table {
+	width: 100%;
+	margin:20px 0;
+}
+
+td, th {
+    padding: 8px;
+	}
+	
+td {
+    border-bottom: 2px solid #E2F0CB;
+	}
+
+th {
+	text-align:left;
+	font-family:'Quicksand', sans-serif;
+	font-size:18px;
+	background-color:darkolivegreen;
+	color:ivory;
+	}
+/*-------------------------- addrecipe:Comments Grid card ---------- */
+.grid-card {
+  border: 2px solid #E2F0CB;
+  padding: 8px;
+  margin:12px 100px 6px 30px;
+  min-height:120px;
+}
+
+.side_l{
+	min-width: 120px;
+	height: 70px;
+}
+
+.middle {
+	padding-left:134px;
+	padding-top:24px;
+}
+
+/*-------------------------- Form ---------- */
+form {
+	width:500px;
+	margin:10 auto 0;
+	margin: 30px 0 60px;
+    padding: 20px;
+    background: ivory;
+    border: 2px solid #E2F0CB;
+    border-radius: 5px;
+    text-align: left;
+	}
+
+form.accounts {
+	margin:30 auto;
+}
+	
+form input, .form-input {
+    width: 440px;
+    vertical-align: bottom;
+    font-size: 14px;
+	font-family: Verdana;
+	color: #450a0a;
+	line-height:1.5em;
+    padding: 0 20px;
+    margin: 10px;
+    border: 2px solid #E2F0CB;
+	border-radius: 5px;
+}
+
+form input {
+	height: 36px;
+}
+
+form input[type=text]:focus {
+  border: 0px;
+  background:#F9FFF5;
+}
+
+form button{
+	font-family: Verdana;
+	font-size: 16px;
+	margin: 10px 0 0 0;
+	padding:10px;
+	background: darkolivegreen;
+	border-radius: 5px;
+	border: 0;
+	color:ivory;
+}
+
+	

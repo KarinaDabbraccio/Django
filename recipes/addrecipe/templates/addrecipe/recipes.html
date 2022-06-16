@@ -1,0 +1,52 @@
+{% extends 'base.html'%}
+{% load static %}
+
+{%block title %}
+  {{ category.name }} - {{ block.super }}
+{% endblock %}
+
+{% block content %} 
+  <h2>{{ category.name }}</h2>
+    <p>File : recipes</p>
+	<p>{{category.description}}</p>
+	<nav class="navbutton">
+	<ul>
+	  <li><a href="{% url 'addrecipe:add_recipe' %}">All categories</a></li>
+	  <li><a href="{% url 'addrecipe:new_recipe' category.pk %}" class="btn">New recipe</a></li>
+  </nav>
+	
+{% endblock %}
+
+{% block content-2 %}
+    <table class="table">
+    <thead class="thead">
+      <tr>
+        <th>Recipe Title</th>
+		<th>Recipe Description</th>
+        <th>Author</th>
+        <th>Comments</th>
+		<th>Views</th>
+        <th>Date posted</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for recipe in recipes %}
+        <tr>
+          <td><a href="{% url 'addrecipe:recipe_comments' category.pk recipe.pk %}">{{ recipe.subject }}</a></td>
+		  <td>{{ recipe.rec_description }}</td>
+          <td>{{ recipe.starter.username }}</td>
+          <td class="centered_text">{{ recipe.replies }}</td>
+		  <td class="centered_text">{{ recipe.views }}</td>
+          <td>{{ recipe.last_updated }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+{% endblock %}
+   
+{% block scripts %}
+    <!--
+	<script type="text/javascript" src="{% static 'javascript/somefunc.js' %}"></script> 
+	-->    
+{% endblock %}

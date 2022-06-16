@@ -1,0 +1,39 @@
+{% extends 'base.html'%}
+{% load static %}
+
+{%block title %}
+  {{ group.name }} - {{ block.super }}
+{% endblock %}
+
+
+{% block content %} 
+  <h2>{{ group.name }}</h2>
+    <p>File : group_products</p>
+	<nav class="navbutton">
+	<ul>
+	  <li><a href="{% url 'products:products_all' %}">All products</a></li></ul>
+	</nav>
+	
+{% endblock %}
+
+{% block content-2 %}
+<div class="card-container">
+{% for product in products %}
+<div class="grid-card-product">
+	<div class="grid-img grid-row parent_img">
+		<a href="{% url 'products:product_details' product.id %}">
+		<div class="pop_up"><h2 class = "centered_text">I want this {{ group.name }}<h2></div>
+		<img src="{{ product.pic.url }}" >
+	</div>
+	<div class="grid-row centered_text"><h3>{{ product.name }}</h3></a></div>
+	<div>Available</div>
+	<div>{% if product.available %} yes {% else %} no {% endif %}</div>
+	<div>Weight</div><div>{{ product.weight }}</div>
+	<div>Price per pound</div><div>{{ product.price }}</div>
+	
+</div>
+ {% endfor %}
+</div>
+<div class="spaces3"></div>
+
+{% endblock %}

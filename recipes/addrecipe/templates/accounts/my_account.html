@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}My account{% endblock %}
+
+
+{% block content %}
+<br>
+<h2>Account: {{ user.username }}</h2>
+
+<nav class="navbutton">
+	<ul>
+	  <li><a class="lighttext" href="{% url 'password_change' %}">Change password</a></li>
+	</ul>
+</nav>
+<p>Change account information:</p>
+<br>
+<form class="centered" method="post" novalidate >
+    {% csrf_token %}
+    {{ form.as_p }}
+    <p class="centered_text"><button type="submit">Save changes</button></p>
+</form>
+
+{% endblock %}

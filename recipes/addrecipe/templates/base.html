@@ -1,0 +1,75 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+	<title>{% block title %}RECIPES{% endblock %}</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'addrecipe/reset.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'addrecipe/stylesheet.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'addrecipe/style_products.css' %}">
+	<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400&display=swap" rel="stylesheet">
+	{% block stylesheet %}{% endblock %}
+</head>
+  
+
+<body>
+{% block body %}
+  
+  <header>
+      <div class="content">
+	    <img class="fl_l" src="{% static 'addrecipe/images/header.png' %}" alt="will change this">
+		<h1>Homemade Food</h1>	
+		{% if user.is_authenticated %}
+            <p class="fl_r" >User: <a class="lighttext" href="{% url 'my_account' %}">{{ user.username }}</a></p>	
+		{% endif %}
+		<br>
+		<p class="fl_r"> 
+		{% with total_items=cart|length %}
+        {% if cart|length > 0 %}
+            Cart:
+            <a class="lighttext" href="{% url 'products:cart_detail' %}">
+                {{ total_items }} item{{ total_items|pluralize }} 
+                ${{ cart.get_total_price }}
+            </a>
+        {% else %}
+            Cart is empty.
+        {% endif %}
+		{% endwith %}</p>
+		<br>	
+	  </div>	
+	
+	  <div class="content">
+	  <nav class="navbar">
+		<ul>
+		  <li><a class="lighttext" href="{% url 'home' %}">Home</a></li>
+		  <li><a class="lighttext" href="{% url 'products:products_all' %}">Products</a></li>
+		{% if user.is_authenticated %}
+          <li><a class="lighttext" href="{% url 'my_account' %}">Account</a></li>
+          <li><a class="lighttext" href="{% url 'logout' %}">Log out</a></li>
+		{% else %}
+          <li><a href="{% url 'login' %}" class="btn btn-outline-secondary">Log in</a></li>
+          <li><a href="{% url 'signup' %}" class="btn btn-primary ml-2">Sign up</a></li>
+		{% endif %}  
+		  <li><a class="lighttext" href="{% url 'addrecipe:add_recipe' %}">AddRecipes</a></li>
+		  <li><a class="lighttext" href="{% url 'products:cart_detail' %}">Cart</a></li>
+        </ul>   
+	  </nav>
+	  </div>
+
+  </header>
+
+<div class="content">
+    {% block content %}
+    {% endblock %}
+		
+	{% block content-2 %}
+    {% endblock %}
+</div>
+  
+{% endblock body %}
+	
+{% block scripts %}
+{% endblock %}
+</body>
+</html>

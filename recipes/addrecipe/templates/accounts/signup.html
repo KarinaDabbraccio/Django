@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}SignUpRecipes{% endblock %}
+
+{% block content %}
+<h2 class="centered_text">Sign up</h2>
+<br>
+<form method="post" novalidate class="centered">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <p class="centered_text"><button type="submit">Create an account</button></p>
+</form>
+<br>
+<p class="centered_text">Already have an account? <a href="{% url 'login' %}">Log in</a></p>
+{% endblock %}
