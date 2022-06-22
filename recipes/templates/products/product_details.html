@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+    {{ product.name }}
+{% endblock %}
+{% block content %}
+    <h2>{{ product.name }}</h2>
+	<nav class="navbutton">
+		<ul>
+		<li><a href="{% url 'products:group_products' product.group.pk %}">{{ product.group }}</a></li>
+		</ul>
+	</nav>
+	<div class="card-container p-details">
+        <div>
+			<img class="product_img" src="{{ product.pic.url }}">
+		</div>
+		<div>
+			<p>File: product_details</p>
+			<p>Weight, kg: ${{ product.weight }}</p>
+			<p>Price per unit: ${{ product.price }}</p><br>
+			<p>{{ product.description|linebreaks }}</p>
+		</div>
+		<div>
+			<form class="add_cart" action="{% url 'orders:cart_add' product.id %}" method="post">
+			{{ cart_product_form }}
+			{% csrf_token %}
+			<input type="submit" value="Add to cart">
+			</form>
+		</div>	
+    </div>
+	
+{% endblock %}

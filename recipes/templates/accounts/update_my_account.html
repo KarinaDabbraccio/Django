@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}My account{% endblock %}
+
+
+{% block content %}
+<br>
+<h2>Update Account Info: {{ user.username }}</h2>
+
+<nav class="navbutton">
+	<ul>
+	  <li><a class="lighttext" href="{% url 'accounts:password_change' %}">Change password</a></li>
+	  <li><a class="lighttext" href="{% url 'accounts:my_account' %}">Back to my account</a></li>
+	</ul>
+</nav>
+<p>File: update_my_account</p>
+<br>
+<form class="centered" method="post" novalidate >
+    {% csrf_token %}
+    {{ form.as_p }}
+    <p class="centered_text"><button type="submit">Save changes</button></p>
+</form>
+
+{% endblock %}

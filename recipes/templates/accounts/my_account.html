@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}My account{% endblock %}
+
+
+{% block content %}
+<br>
+<h2>Account: {{ user.username }}</h2>
+
+<nav class="navbutton">
+	<ul>
+	  <li><a class="lighttext" href="{% url 'accounts:password_change' %}">Change password</a></li>
+	  <li><a class="lighttext" href="{% url 'accounts:update_my_account' %}">Update Info</a></li>
+	</ul>
+</nav>
+<h3>My Orders:</h3>
+<table class="table">
+    <thead class="thead">
+      <tr>
+        <th>Name</th>
+		<th>Created at</th>
+		<th>Items</th>
+        <th>Amount</th>
+        <th>Paid</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for order in orders %}
+        <tr>
+          <td>{{ order.name }}</td>
+		  <td>{{ order.created }}</td>
+		  <td class="small-txt"> {% for p in order.get_ordered_products %}
+				{{ p.product }} - {{ p.quantity }} ,    
+			  {% endfor %}	
+		  </td>
+          <td>{{ order.get_total }}</td>
+          <td class="centered_text">{% if order.paid %} yes {% else %} no {%endif%}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+{% endblock %}

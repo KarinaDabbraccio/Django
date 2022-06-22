@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %}Sales - all orders{% endblock %}
+
+
+{% block content %}
+<br>
+<h2>Account: {{ user.username }}</h2>
+
+<nav class="navbutton">
+	<ul>
+	  <li><a class="lighttext" href="{% url 'sales:all_orders' %}">All Orders</a></li>
+	  <li><a class="lighttext" href="{% url 'inventory:delete_expired' %}">Delete Expired</a></li>
+	</ul>
+</nav>
+  <h3>Inventory:</h3>
+<table class="table">
+    <thead class="thead">
+      <tr>
+        <th>Product</th>
+		<th>Amount</th>
+		<th>Cost</th>
+        <th>Sell by</th>
+        <th>Location</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in items %}
+        <tr>
+          <td>{{ item.product }}</td>
+		  <td>{{ item.amount }}</td>
+		  <td> {{ item.cost}}</td>
+          <td>{{ item.sell_by }}</td>
+          <td>{{ item.location }}</td>
+		  <td>   
+        </tr>
+		
+      {% endfor %}
+    </tbody>
+  </table>
+
+
+ <h3>Expired Inventory:</h3>
+<table class="table">
+    <thead class="thead">
+      <tr>
+        <th>Product</th>
+		<th>Amount</th>
+		<th>Cost</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in expired %}
+        <tr>
+          <td>{{ item.product.name }}</td>
+		  <td>{{ item.amount }}</td>
+		  <td> {{ item.cost}}</td>
+  
+        </tr>
+		
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

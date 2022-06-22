@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 from django.views.generic import UpdateView
 from django.contrib.auth.decorators import login_required
 
+from orders.models import Order
 
 
 def signup(request):
@@ -21,12 +22,16 @@ def signup(request):
         form = SignUpForm()
     return render(request, 'accounts/signup.html', {'form': form})
 
+def my_account_view(request):
+    orders = Order.objects.filter(email=request.user.email)
+    return render(request, 'accounts/my_account.html', {'orders':orders })
+
 @method_decorator(login_required, name='dispatch')
 class UserUpdateView(UpdateView):
     model = User
     fields = ('first_name', 'last_name', 'email', )
-    template_name = 'accounts/my_account.html'
-    success_url = reverse_lazy('my_account')
+    template_name = 'accounts/update_my_account.html'
+    success_url = reverse_lazy('update_my_account')
 
     def get_object(self):
         return self.request.user

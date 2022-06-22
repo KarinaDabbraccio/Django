@@ -1,0 +1,26 @@
+{% extends 'base.html'%}
+{% load static %}
+
+{% block content %}
+
+<br>  	  
+<h1>File : home</h1>
+<br>
+<p> Users: {{ currentUser }}
+, {% if currentUser.user_group == 'M' %} Manager {% else %} User {% endif %}</p>
+<p id="demo"> Date today </p>
+<input type="button" value="date" onclick="document.getElementById('demo').innerHTML = Date()">
+
+{% if currentUser.user_group == 'M' %}
+<p> Management links:</p>
+<nav class="navbutton">
+	<ul>
+	  <li><a class="lighttext" href="{% url 'sales:all_orders' %}">All Orders</a></li>
+	  <li><a class="lighttext" href="{% url 'inventory:manage_inv' %}">Inventory</a></li>
+	</ul>
+</nav>
+
+{% endif %}
+{% endblock %}
+
+

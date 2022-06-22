@@ -35,10 +35,19 @@ INSTALLED_APPS = [
     'addrecipe.apps.AddrecipeConfig', 
     
     # add accounts:
-    'accounts',
+    'accounts.apps.AccountsConfig',
     
     # add products:
     'products.apps.ProductsConfig',
+    
+    # add orders:
+    'orders.apps.OrdersConfig',
+    
+    # add sales:
+    'sales.apps.SalesConfig',
+    
+    # add inventory:
+    'inventory.apps.InventoryConfig',
     
     'django.contrib.admin',
     'django.contrib.auth',
@@ -63,8 +72,8 @@ ROOT_URLCONF = 'recipes.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        #'DIRS': [os.path.join(BASE_DIR, 'templates')],
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        #'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -74,7 +83,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 
                 #cart to be available:
-                'products.context_processors.cart',
+                'orders.context_processors.cart',
             ],
         },
     },
@@ -129,6 +138,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
 
 MEDIA_ROOT =  os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'

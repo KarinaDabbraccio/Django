@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block title %}Sales - all orders{% endblock %}
+
+
+{% block content %}
+<br>
+<h2>Account: {{ user.username }}</h2>
+
+<nav class="navbutton">
+	<ul>
+	  <li><a class="lighttext" href="{% url 'sales:all_orders' %}">All Orders</a></li>
+	  <li><a class="lighttext" href="{% url 'inventory:manage_inv' %}">Inventory</a></li>
+	</ul>
+</nav>
+<h3>All Orders:</h3>
+<table class="table">
+    <thead class="thead">
+      <tr>
+        <th>Name</th>
+		<th>Created at</th>
+		<th>Items</th>
+        <th>Amount</th>
+        <th>Paid</th>
+		<th>inProduction</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for order in orders %}
+        <tr>
+          <td>{{ order.name }}</td>
+		  <td>{{ order.created }}</td>
+		  <td class="small-txt"> {% for p in order.get_ordered_products %}
+				{{ p.product }} - {{ p.quantity }} ,    
+			  {% endfor %}	
+		  </td>
+          <td>{{ order.get_total }}</td>
+          <td class="centered_text">{% if order.paid %} yes {% else %} no {%endif%}</td>
+		  <td class="centered_text">{% if order.inProduction %} yes {% else %} no {%endif%}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  
+  <h3>All Inventory:</h3>
+<table class="table">
+    <thead class="thead">
+      <tr>
+        <th>Product</th>
+		<th>Amount</th>
+		<th>Cost</th>
+        <th>Sell by</th>
+        <th>Location</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in items %}
+        <tr>
+          <td>{{ item.product }}</td>
+		  <td>{{ item.amount }}</td>
+		  <td> {{ item.cost}}</td>
+          <td>{{ item.sell_by }}</td>
+          <td>{{ item.location }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+{% endblock %}

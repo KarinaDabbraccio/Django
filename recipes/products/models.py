@@ -1,6 +1,7 @@
 from django.db import models
 
 
+
 class Group(models.Model):
     """ The name field has to be unique, so to avoid duplicates. 
         Has zero or many Products.
@@ -8,13 +9,12 @@ class Group(models.Model):
         """   
     name = models.CharField(max_length=40, unique=True)
     pic = models.ImageField(upload_to='images/', null=True, default = 'null');
-
-    
-    def __str__(self):
-        return self.name
     
     def get_products_count(self):
         return Product.objects.filter(group=self).count()
+    
+    def __str__(self) -> str:
+        return 'Gr: {name}'.format(name=self.name) 
 
 
 class Product(models.Model):
@@ -28,42 +28,27 @@ class Product(models.Model):
     group = models.ForeignKey(Group, related_name='products', on_delete=models.CASCADE)
     description = models.CharField(max_length=500)
     weight = models.DecimalField(max_digits=7, decimal_places=2);
-    price = models.DecimalField(max_digits=7, decimal_places=2);
+    #price = models.DecimalField(max_digits=7, decimal_places=2);
     pic = models.ImageField(upload_to='images/', null=True, default = 'null');
-    available = models.BooleanField();
+    #available = models.BooleanField();
     
-    def __str__(self):
-        return self.name
+    def is_available(self):
+        from inventory.models import InventoryItem
+        available_amount = InventoryItem.objects.filter(product=self).count()
+        return available_amount
     
-class Order(models.Model):
-    """Customer is a user who placed this order;
-    User may not be deleted if he has orders;
-    """
-    name = models.CharField(max_length=100)
-    email = models.EmailField()
-    created = models.DateTimeField(auto_now_add=True)
-    inProduction = models.BooleanField(default=False)
-    paid = models.BooleanField(default=False)
-    
-    def get_total(self):
-        return sum(ordered_product.get_total_op() for ordered_product in self.ordered_products.all())
-
-class OrderedProduct(models.Model):
-    """ Products thst are selected by User to his Order:
-        cannot delete the product if it already was selected to be in the order;
-        default amount is 1 product of the type when the product is selected;
-        if order is deleted - all ordered products for this order are deleted 
-        """
-    product = models.ForeignKey(Product, related_name = 'ordered', on_delete = models.PROTECT);
-    price = models.DecimalField(max_digits=7, decimal_places=2, default = '0');
-    quantity = models.PositiveSmallIntegerField(default = 1);
-    order = models.ForeignKey(Order, related_name='ordered_products', on_delete = models.CASCADE);
-    
-    class Meta:
-        unique_together = ('product', 'order')
-        
-    def get_total_op(self):
-         return self.quantity * self.product.price
-
+    def __str__(self) -> str:
+        return '{name} - {group}'.format(name=self.name, group=self.group) 
     
 
+class PricedProduct(models.Model):
+    """Price list, with one-to-one relationship, to keep the product not changed when the price is updated"""
+    product = models.OneToOneField(
+        Product,
+        on_delete=models.CASCADE,
+       # primary_key=True,
+    )
+    price = models.DecimalField(max_digits=7, decimal_places=2);
+    
+    def __str__(self) -> str:
+        return '{name} - {group} - {price}'.format(name=self.product.name, group=self.product.group, price=self.price)  
