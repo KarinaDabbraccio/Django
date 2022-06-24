@@ -29,7 +29,7 @@
 	<div>Available</div>
 	<div>{% if product.is_available > 0 %} yes {% else %} not now {% endif %}</div>
 	<div>Weight, lb</div><div>{{ product.weight }}</div>
-	<div>Unit Price</div><div>{{ product.pricedproduct.price }}</div>
+	<div>Unit Price</div><div>{{ product.price }}</div>
 	
 </div>
  {% endfor %}

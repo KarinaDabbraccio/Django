@@ -28,13 +28,14 @@ class InventoryItem(models.Model):
     
     product = models.ForeignKey(Product, related_name = 'inventory_items', on_delete = models.PROTECT);
     amount = models.PositiveSmallIntegerField(default = 1);
-    registered_at = models.DateTimeField(auto_now_add=True);
+    registered_at = models.DateField(auto_now_add=True);
+    # DateField
     cost = models.DecimalField(max_digits=7, decimal_places=2, default = '0');
-    sell_by = models.DateTimeField(null=True, blank=True);
+    sell_by = models.DateField(null=True, blank=True);
     location = models.ForeignKey(Location, related_name = 'inventory_items', on_delete = models.PROTECT);
     manufacturer = models.ForeignKey(Manufacturer, related_name = 'inventory_items', on_delete = models.PROTECT);
     
-        
+         
     '''
     Displays info in admin page
     '''
@@ -42,8 +43,6 @@ class InventoryItem(models.Model):
         return '{product} - {sell_by} - Amount: {amount} - Cost: {cost} - {location}'.format(product=self.product, sell_by=self.sell_by, 
                                                                                 amount=self.amount, cost=self.cost,
                                                                                   location=self.location)
-
-
 
 class LossInventory(models.Model):
     product = models.ForeignKey(Product, related_name = 'inventory_loss', on_delete = models.CASCADE);

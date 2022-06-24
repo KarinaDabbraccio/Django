@@ -1,7 +1,6 @@
 from django.db import models
 
 
-
 class Group(models.Model):
     """ The name field has to be unique, so to avoid duplicates. 
         Has zero or many Products.
@@ -14,7 +13,7 @@ class Group(models.Model):
         return Product.objects.filter(group=self).count()
     
     def __str__(self) -> str:
-        return 'Gr: {name}'.format(name=self.name) 
+        return '{name}'.format(name=self.name) 
 
 
 class Product(models.Model):
@@ -28,9 +27,8 @@ class Product(models.Model):
     group = models.ForeignKey(Group, related_name='products', on_delete=models.CASCADE)
     description = models.CharField(max_length=500)
     weight = models.DecimalField(max_digits=7, decimal_places=2);
-    #price = models.DecimalField(max_digits=7, decimal_places=2);
+    price = models.DecimalField(max_digits=7, decimal_places=2, default=0);
     pic = models.ImageField(upload_to='images/', null=True, default = 'null');
-    #available = models.BooleanField();
     
     def is_available(self):
         from inventory.models import InventoryItem
@@ -40,15 +38,16 @@ class Product(models.Model):
     def __str__(self) -> str:
         return '{name} - {group}'.format(name=self.name, group=self.group) 
     
-
-class PricedProduct(models.Model):
-    """Price list, with one-to-one relationship, to keep the product not changed when the price is updated"""
-    product = models.OneToOneField(
-        Product,
-        on_delete=models.CASCADE,
-       # primary_key=True,
-    )
-    price = models.DecimalField(max_digits=7, decimal_places=2);
     
-    def __str__(self) -> str:
-        return '{name} - {group} - {price}'.format(name=self.product.name, group=self.product.group, price=self.price)  
+    def is_instock(self):
+        """ returns not negtive number, how much units of the product is in stock (inventory)
+            """
+        from inventory.models import InventoryItem
+        inventory = InventoryItem.objects.filter(product=self)
+        instock = 0
+        for inv in inventory:
+            instock+=inv.amount
+        return instock
+            
+
+    

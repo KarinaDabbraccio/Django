@@ -42,28 +42,26 @@
     </tbody>
   </table>
   
-  <h3>All Inventory:</h3>
+  <h3>Ordered Items sum:</h3>
 <table class="table">
     <thead class="thead">
       <tr>
         <th>Product</th>
+		<th>Group</th>
 		<th>Amount</th>
-		<th>Cost</th>
-        <th>Sell by</th>
-        <th>Location</th>
       </tr>
     </thead>
     <tbody>
-      {% for item in items %}
+      {% for k ,v in ordered_items_list.items %}
         <tr>
-          <td>{{ item.product }}</td>
-		  <td>{{ item.amount }}</td>
-		  <td> {{ item.cost}}</td>
-          <td>{{ item.sell_by }}</td>
-          <td>{{ item.location }}</td>
+          <td>{{ k.name }}</td>
+		  <td>{{ k.group }}</td>
+		  <td>{{ v }}</td>
+
         </tr>
       {% endfor %}
     </tbody>
   </table>
-
+  
+<div class="spaces"></div>
 {% endblock %}

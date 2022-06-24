@@ -1,6 +1,6 @@
 from django.db import models
-from products.models import PricedProduct
-
+#from products.models import PricedProduct
+from products.models import Product
     
 class Order(models.Model):
     """Customer is a user who placed this order;
@@ -25,7 +25,7 @@ class OrderedProduct(models.Model):
         default amount is 1 product of the type when the product is selected;
         if order is deleted - all ordered products for this order are deleted 
         """
-    product = models.ForeignKey(PricedProduct, related_name = 'ordered', on_delete = models.PROTECT);
+    product = models.ForeignKey(Product, related_name = 'ordered', on_delete = models.PROTECT);
     price = models.DecimalField(max_digits=7, decimal_places=2, default=0);
     quantity = models.PositiveSmallIntegerField(default = 1);
     order = models.ForeignKey(Order, related_name='ordered_products', on_delete = models.CASCADE);

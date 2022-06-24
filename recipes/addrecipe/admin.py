@@ -3,7 +3,7 @@ from django.contrib import admin
 
 # Register your models here.
 from .models import Category, Recipe, Comment
-from products.models import Group, Product, PricedProduct
+from products.models import Group, Product
 from orders.models import Order, OrderedProduct
 from accounts.models import Profile
 from sales.models import SoldItem
@@ -25,14 +25,12 @@ admin.site.register(LossInventory)
 
 #from Products app:
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['name', 'group', 'weight', 'description', 'pic']
+    list_display = ['name', 'group', 'price',  'weight', 'description', 'pic']
     list_filter = ['group']
-    list_editable = ['weight', 'description', 'pic']
+    list_editable = ['price', 'weight', 'description', 'pic']
 admin.site.register(Product, ProductAdmin)
 
 admin.site.register(Group)
-admin.site.register(PricedProduct)
-
 
 class OrderedProductInline(admin.TabularInline):
     model = OrderedProduct

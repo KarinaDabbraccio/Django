@@ -9,11 +9,12 @@
 
 <nav class="navbutton">
 	<ul>
+
 	  <li><a class="lighttext" href="{% url 'sales:all_orders' %}">All Orders</a></li>
 	  <li><a class="lighttext" href="{% url 'inventory:manage_inv' %}">Inventory</a></li>
 	</ul>
 </nav>
-  <h3>Loss - Expired Inventory:</h3>
+  <h3>Loss - Expired Inventory - Removed from Inventory List:</h3>
 <table class="table">
     <thead class="thead">
       <tr>
@@ -36,4 +37,5 @@
     </tbody>
   </table>
 <p>Inventory Items deleted: {{ count }} for total amount : ${{ total }}</p>
+<div class="spaces"></div>
 {% endblock %}

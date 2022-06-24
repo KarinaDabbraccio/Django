@@ -15,9 +15,9 @@ def all_orders(request):
     if (current_user_group != 'M'):
         return redirect('home')
     else:
-        orders = Order.objects.filter(inProduction=False)
-        items = InventoryItem.objects.all()
-        
+        # get not processsed orders
+        orders = Order.objects.filter(inProduction=False).order_by('created')
+        # create the list of all ordered items: key-Product, value - unitsOrdered: quantity
         ordered_items_list = dict()
         for order in orders:
             oredred_products = order.get_ordered_products()
@@ -27,9 +27,14 @@ def all_orders(request):
                 quantity = op.quantity
                 ordered_items_list[name] = ordered_items_list.get(name, 0) + quantity
                 
+
+                
         print("________________ALL!!!")
         # {<PricedProduct: Chocolate - Gr: IceCream - 7.50>: 18, ... <PricedProduct: Chocolate Crumbs - Gr: Cookies - 8.00>: 1}
-        print(ordered_items_list)
-    
+        print(ordered_items_list.values())
+        print('price')
+        for key in ordered_items_list.keys():
+            print(key.price)
         
-    return render(request, 'sales/all_orders.html', {'orders': orders, 'items' : items, })
+    return render(request, 'sales/all_orders.html', {'orders': orders, 
+                                                     'ordered_items_list': ordered_items_list})

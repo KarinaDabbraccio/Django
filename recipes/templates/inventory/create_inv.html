@@ -1,0 +1,28 @@
+{% extends 'base.html'%}
+{% load static %}
+
+{%block title %}
+  New Inv
+{% endblock %}
+
+{% block content %}
+<h2>New Inv Item</h2>
+<nav class="navbutton">
+	<ul>
+	  <li><a class="lighttext" href="{% url 'inventory:manage_inv' %}">Inventory</a></li>
+	</ul>
+</nav>
+<p>File : create_inv</p>
+ 
+{% endblock %}
+
+
+{% block content-2 %}
+<form method="post">
+    {% csrf_token %}
+    <div class = "forms"> 
+	{{ form.as_p }} </div>
+    <button type="submit">Submit</button>
+  </form>
+{% endblock %}
+   

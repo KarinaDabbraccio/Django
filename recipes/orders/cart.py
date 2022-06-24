@@ -7,7 +7,7 @@ Created on Sun Jun 12 20:28:24 2022
 
 from decimal import Decimal
 from django.conf import settings
-from products.models import PricedProduct
+from products.models import Product
 
 
 class Cart(object):
@@ -58,7 +58,7 @@ class Cart(object):
         """
         product_ids = self.cart.keys()
         # get products and add them to cart
-        products = PricedProduct.objects.filter(id__in=product_ids)
+        products = Product.objects.filter(id__in=product_ids)
         for product in products:
             self.cart[str(product.id)]['product'] = product
 

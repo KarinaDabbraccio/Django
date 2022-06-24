@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Sales - all orders{% endblock %}
+{% block title %}Inventory - M{% endblock %}
 
 
 {% block content %}
@@ -11,34 +11,9 @@
 	<ul>
 	  <li><a class="lighttext" href="{% url 'sales:all_orders' %}">All Orders</a></li>
 	  <li><a class="lighttext" href="{% url 'inventory:delete_expired' %}">Delete Expired</a></li>
+	  <li><a class="lighttext" href="{% url 'inventory:create_inv' %}">Create inv</a></li>
 	</ul>
 </nav>
-  <h3>Inventory:</h3>
-<table class="table">
-    <thead class="thead">
-      <tr>
-        <th>Product</th>
-		<th>Amount</th>
-		<th>Cost</th>
-        <th>Sell by</th>
-        <th>Location</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for item in items %}
-        <tr>
-          <td>{{ item.product }}</td>
-		  <td>{{ item.amount }}</td>
-		  <td> {{ item.cost}}</td>
-          <td>{{ item.sell_by }}</td>
-          <td>{{ item.location }}</td>
-		  <td>   
-        </tr>
-		
-      {% endfor %}
-    </tbody>
-  </table>
-
 
  <h3>Expired Inventory:</h3>
 <table class="table">
@@ -55,11 +30,52 @@
         <tr>
           <td>{{ item.product.name }}</td>
 		  <td>{{ item.amount }}</td>
-		  <td> {{ item.cost}}</td>
+		  <td> {{ item.cost}}</td>  
+        </tr>		
+      {% endfor %}
+    </tbody>
+  </table>
   
+  <h3>Groups Inventory:</h3>
+  <table class="table">
+    <thead class="thead">
+      <tr>
+        <th>Product</th>
+		<th>Units In-Stock</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for product , amount in groups_inventory_list.items %}
+        <tr>
+          <td>{{ product }}</td>
+		  <td>{{ amount }}</td> 
         </tr>
 		
       {% endfor %}
     </tbody>
   </table>
+  <p>Total cost of inventory in-stock: {{ total_cost }}</p>
+  </br>
+  <h3>All Inventory Items:</h3>
+<table class="table">
+    <thead class="thead">
+      <tr>
+        <th>Product</th>
+		<th>Amount</th>
+		<th>Cost</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in items %}
+        <tr>
+          <td>{{ item.product.name }}</td>
+		  <td>{{ item.amount }}</td>
+		  <td> {{ item.cost}}</td>  
+        </tr>		
+      {% endfor %}
+    </tbody>
+  </table>
+  
+  <div class="spaces"></div>
 {% endblock %}
