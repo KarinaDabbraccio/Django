@@ -12,6 +12,7 @@ from . import views
 app_name = 'sales'
 urlpatterns = [
     
-    path('all_orders/', views.all_orders, name='all_orders'),
+    path('orders-m/', views.all_orders, name='all_orders'),
+    path('details_upd/<int:order_id>/', views.order_details, name='order_details'),
     
     ]

@@ -17,26 +17,28 @@
 <table class="table">
     <thead class="thead">
       <tr>
-        <th>Name</th>
+        <th>ID</th>
 		<th>Created at</th>
 		<th>Items</th>
-        <th>Amount</th>
+        <th>Amount (income), $</th>
+		<th>Total inventory cost, $</th>
         <th>Paid</th>
-		<th>inProduction</th>
+		<th>Shipped</th>
       </tr>
     </thead>
     <tbody>
       {% for order in orders %}
         <tr>
-          <td>{{ order.name }}</td>
-		  <td>{{ order.created }}</td>
+          <td>{{ order.id }}</td>
+		  <td><a href="{% url 'sales:order_details' order.id %}">{{ order.created }}</a></td>
 		  <td class="small-txt"> {% for p in order.get_ordered_products %}
 				{{ p.product }} - {{ p.quantity }} ,    
 			  {% endfor %}	
 		  </td>
           <td>{{ order.get_total }}</td>
-          <td class="centered_text">{% if order.paid %} yes {% else %} no {%endif%}</td>
-		  <td class="centered_text">{% if order.inProduction %} yes {% else %} no {%endif%}</td>
+		  <td>{{ order.inventory_total_cost }}</td>
+          <td class="centered_text">{% if order.paid %} + {% else %} NO {%endif%}</td>
+		  <td class="centered_text">{% if order.shipped %} + {% else %} NO {%endif%}</td>
         </tr>
       {% endfor %}
     </tbody>
@@ -48,7 +50,7 @@
       <tr>
         <th>Product</th>
 		<th>Group</th>
-		<th>Amount</th>
+		<th>Units</th>
       </tr>
     </thead>
     <tbody>

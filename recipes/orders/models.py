@@ -9,8 +9,9 @@ class Order(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField()
     created = models.DateTimeField(auto_now_add=True)
-    inProduction = models.BooleanField(default=False)
+    shipped = models.BooleanField(default=False)
     paid = models.BooleanField(default=False)
+    inventory_total_cost = models.DecimalField(max_digits=7, decimal_places=2, default=0);
     
     def get_total(self):
         return sum(ordered_product.get_total_op() for ordered_product in self.ordered_products.all())

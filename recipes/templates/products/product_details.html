@@ -21,11 +21,16 @@
 			<p>{{ product.description|linebreaks }}</p>
 		</div>
 		<div>
+		
+		{% if product.is_available > 0 %}		
 			<form class="add_cart" action="{% url 'orders:cart_add' product.id %}" method="post">
 			{{ cart_product_form }}
 			{% csrf_token %}
 			<input type="submit" value="Add to cart">
 			</form>
+		{% else %}
+		<p class="centered_text">You can not order this item, there's none of it left now</p>
+		{% endif %}
 		</div>	
     </div>
 	

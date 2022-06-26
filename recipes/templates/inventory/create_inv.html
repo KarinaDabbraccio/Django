@@ -19,10 +19,10 @@
 
 {% block content-2 %}
 <form method="post">
-    {% csrf_token %}
-    <div class = "forms"> 
-	{{ form.as_p }} </div>
+    {% csrf_token %}   
+	{{ form.as_p }} 
     <button type="submit">Submit</button>
   </form>
+  
 {% endblock %}
    

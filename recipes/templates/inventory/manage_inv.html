@@ -20,7 +20,7 @@
     <thead class="thead">
       <tr>
         <th>Product</th>
-		<th>Amount</th>
+		<th>Amount, units</th>
 		<th>Cost</th>
 
       </tr>
@@ -61,9 +61,9 @@
     <thead class="thead">
       <tr>
         <th>Product</th>
-		<th>Amount</th>
-		<th>Cost</th>
-
+		<th>Amount, units</th>
+		<th>Cost per unit</th>
+		<th>Cost total (row)</th>
       </tr>
     </thead>
     <tbody>
@@ -71,7 +71,8 @@
         <tr>
           <td>{{ item.product.name }}</td>
 		  <td>{{ item.amount }}</td>
-		  <td> {{ item.cost}}</td>  
+		  <td> {{ item.cost}}</td> 
+		  <td> {% widthratio item.cost 1 item.amount %}</td> 		  
         </tr>		
       {% endfor %}
     </tbody>

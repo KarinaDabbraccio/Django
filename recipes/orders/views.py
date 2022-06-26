@@ -8,7 +8,7 @@ from django.views.decorators.http import require_POST
 from .models import OrderedProduct
 from .forms import CartAddProductForm, OrderCreateForm
 from .cart import Cart
-
+import math
 from inventory.models import InventoryItem
 
 
@@ -38,10 +38,16 @@ def cart_detail(request):
 #ORDER
 def order_new(request):
     cart = Cart(request)
+     
     if request.method == 'POST':
         form = OrderCreateForm(request.POST)
+        inv_cost=0
         if form.is_valid():
+            
+            inv_del_list = list()
+            inv_upd_list = list()
             # check that it is enough inventory
+            
             for item in cart:
                 product_cart = item['product']
                 quantity_cart = item['quantity']
@@ -56,32 +62,43 @@ def order_new(request):
                     return render(request, 'orders/order_new.html', {'cart': cart, 'form': form, 'msg':msg})
                     
                 else:    
-                    #remove from the inventory 
+                    # add to list to remove from the inventory 
                     inv_list = InventoryItem.objects.filter(product=product_cart)
-                    #inv_cost=0 
-                    #TODO: save cost of sold items 
                     for inv in inv_list:
                         inv_quantity=inv.amount
                         
                         if quantity_cart > 0:
-                            print(inv.amount)
                             inv.amount-=quantity_cart
-                            print(inv.amount)
-                            quantity_cart-=inv_quantity
-                            #inv_cost+=inv.cost * (inv_quantity - quantity_cart)
-                            if inv.amount <= 0:
-
-                                print(inv)
-                                inv.delete()
+                            #update cost
+                            if inv_quantity >= quantity_cart:
+                                inv_cost+= inv.cost * quantity_cart
                             else:
-                                print('save updated inv')
-                                inv.save()
+                                inv_cost+= inv.cost * inv_quantity
+                               
+                            quantity_cart-=inv_quantity                     
+                            
+                            if inv.amount <= 0:
+                                #delete inventoryItem with 0 amount
+                                #inv.delete()
+                                inv_del_list.append(inv)                                
+                            else:
+                                #save updated inventoryItem
+                                #inv.save()
+                                inv_upd_list.append(inv)
                         else:
                         #exit loop when deleted/updated as much as ordered
                             break
             
+            #update the database
+            for inv in inv_del_list:
+                inv.delete()
+            for inv in inv_upd_list:
+                inv.save()
+            
             #after check that all items are enough, save new order and process cart    
             order = form.save()
+            order.inventory_total_cost = inv_cost
+            order.save()
             for item in cart:
                 #create ordered product
                 OrderedProduct.objects.create(order=order,
@@ -91,7 +108,7 @@ def order_new(request):
             # clear cart
             cart.clear()
             return render(request, 'orders/order_new_done.html',
-                          {'order': order})
+                          {'order': order, 'inv_cost' : inv_cost})
     else:
         form = OrderCreateForm
     return render(request, 'orders/order_new.html',

@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+    OrderDetails
+{% endblock %}
+{% block content %}
+    <h2>Order details</h2>
+	<nav class="navbutton">
+		<ul>
+		<li><a href="{% url 'sales:all_orders' %}">All Orders</a></li>
+		</ul>
+	</nav>
+	<div >
+
+		<div>
+			<p>ID: {{ order.id}}</p>
+			<p>Name: {{ order.name}}</p>
+			<p>email: {{ order.email }}</p>
+			<p>created: {{ order.created }}</p>
+			<p>paid: {{ order.paid }}</p>
+			<p>shipped: {{ order.shipped }}</p><br>
+			<br>
+			<p>inventory_total_cost: {{ order.inventory_total_cost }}</p>
+		</div>
+		
+		<div>
+		<h1>Update</h1>
+
+		<form action="{% url 'sales:order_upd_paid' order.id %}" method="post">
+			{% csrf_token %}
+			<div class = "forms"> 
+	{{ form.as_p }} </div>
+			<input type="submit" value="Submit">
+		</form>
+		</div>	
+		
+    </div>
+	
+{% endblock %}

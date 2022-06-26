@@ -36,13 +36,13 @@ class InventoryItem(models.Model):
     manufacturer = models.ForeignKey(Manufacturer, related_name = 'inventory_items', on_delete = models.PROTECT);
     
          
-    '''
+    """
     Displays info in admin page
-    '''
+    
     def __str__(self) -> str:
         return '{product} - {sell_by} - Amount: {amount} - Cost: {cost} - {location}'.format(product=self.product, sell_by=self.sell_by, 
                                                                                 amount=self.amount, cost=self.cost,
-                                                                                  location=self.location)
+                                                                                  location=self.location) """
 
 class LossInventory(models.Model):
     product = models.ForeignKey(Product, related_name = 'inventory_loss', on_delete = models.CASCADE);

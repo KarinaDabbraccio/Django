@@ -5,6 +5,9 @@ from orders.models import Order
 from accounts.models import Profile
 from inventory.models import InventoryItem
 
+from django.views.generic import UpdateView
+from .forms import OrderUpdForm
+
 
 @login_required
 def all_orders(request):
@@ -16,7 +19,8 @@ def all_orders(request):
         return redirect('home')
     else:
         # get not processsed orders
-        orders = Order.objects.filter(inProduction=False).order_by('created')
+        #orders = Order.objects.filter(shipped=False, paid=False).order_by('created')
+        orders = Order.objects.all().order_by('created')
         # create the list of all ordered items: key-Product, value - unitsOrdered: quantity
         ordered_items_list = dict()
         for order in orders:
@@ -38,3 +42,20 @@ def all_orders(request):
         
     return render(request, 'sales/all_orders.html', {'orders': orders, 
                                                      'ordered_items_list': ordered_items_list})
+
+@login_required
+def order_details(request, order_id):
+    order = get_object_or_404(Order, pk=order_id)
+    if request.method == 'POST':
+        form = OrderUpdForm(request.POST)
+        if form.is_valid():
+            order_f = form.save(commit=False)
+            order.paid = order_f.paid
+            order.shipped = order_f.shipped
+            order.save()
+            return redirect('sales:order_details', order_id=order.id)
+    else:
+        form = OrderUpdForm(instance=order)
+    
+    return render(request, 'sales/order_details.html', {'order': order,
+                                                       'form': form})

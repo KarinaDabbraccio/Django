@@ -179,6 +179,10 @@ th {
 	background-color:darkolivegreen;
 	color:ivory;
 	}
+	
+.record_details {
+	width: 50%;
+}
 /*-------------------------- addrecipe:Comments Grid card ---------- */
 .grid-card {
   border: 2px solid #E2F0CB;
@@ -213,7 +217,7 @@ form.accounts {
 	margin:30 auto;
 }
 	
-form input, .form-input {
+form input, select, .form-input {
     width: 440px;
     vertical-align: bottom;
     font-size: 14px;
@@ -225,9 +229,35 @@ form input, .form-input {
     border: 2px solid #E2F0CB;
 	border-radius: 5px;
 }
+.checkbox_form{
+	width: 170px;
+}
 
-form input {
+.checkbox_form table{
+	margin: 0;
+}
+
+.checkbox_form input {
+	width: 150px;
+}
+
+.checkbox_form td {
+	border: 0;
+	vertical-align: middle;
+}
+
+
+form input, select {
 	height: 36px;
+}
+
+form select {
+	width: 484px;
+}
+
+#id_paid, #id_shipped {
+  height: 22px;
+  width: 50px;
 }
 
 form input[type=text]:focus {
