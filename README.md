@@ -16,17 +16,20 @@
 4) orders app:
     - Cart - to keep track of desired Products from session, available for all users;
     - models: OrderedItem, Order - Products from cart may be added/removed from the Order by all users;
-    - add to cart as desired;
-    - Order may be created only with the items that are available in the inventory.
+    - add to cart at once limited by choice field (1-10 items), by availability of inventory(yes/no);
+    - Order may be created only with the items that are available in the inventory;
+    - each Order when created has total cost of the inventory ordered for further profit calculation.
 
 5) inventory app:
     - access only for Manager;
     - models: InventoryItem - shows available Products with cost, amount, expiration date; 
     - LostInventory - inventory that may not be sold, tracking Product and losses (=amount * unit cost);
-    - option to delete expired inventory;
+    - option to delete expired inventory, create new inventory item;
     - inventory item is decreased in quantity/deleted when ordered.
    
 6) sales app:
-    - for now only shows all orders, quantity of each Product ordered.
+    - access for Manager users;
+    - shows all orders, quantity of each Product type that was ordered (rating of most popular products);
+    - allows to update order as paid, shipped.
 
     
