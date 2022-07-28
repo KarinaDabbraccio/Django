@@ -24,11 +24,13 @@
 	</ul>
   </nav>
   <h3>Comments:</h3>
+  {% if recipe.comments.all %}
+  
   {% for comment in recipe.comments.all %}
     <div class="grid-card">
       <div class="fl_l">
 	    <div class="side_l">
-          <img src="{% static 'addrecipe/images/userr.png' %}" alt="{{ comment.created_by.username }}">
+          <img src="{{ comment.created_by.profile.pic.url }}" alt="{{ comment.created_by.username }}">
 		  <p class="small-txt">{{ comment.created_by.username }}<br> Comments: {{ comment.created_by.comments.count }}</p>
         </div>
 	  </div><div class="fl_r"><p class="small-txt side_r">{{ comment.created_at }}</p></div>
@@ -37,5 +39,11 @@
 	  </div>
 	</div>
   {% endfor %}
+  
+{% else %}
+<p>No comments yet.</p>
+{% endif %}
+
+
 <div class="spaces"></div>
 {% endblock %}

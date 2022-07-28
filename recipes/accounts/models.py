@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+from PIL import Image
+
 class Profile(models.Model):
     '''
     Choices for 'user_group' to identify users as 
@@ -13,9 +15,22 @@ class Profile(models.Model):
         ('M', 'Manager')
     ]
     
-    username = models.OneToOneField(User, default='U', on_delete=models.CASCADE)
-    pic = models.ImageField(upload_to='images/users', null=True, default = 'null')
-    user_group = models.CharField(max_length=1, choices=USER_TYPE)
+    username = models.OneToOneField(User, on_delete=models.CASCADE)
+    pic = models.ImageField(upload_to='images/users', default = 'default.png')
+    user_group = models.CharField(max_length=1, default = 'U', choices=USER_TYPE)
+    
+    # Override the save method of the model
+    def save(self, *args, **kwargs):
+        super(Profile, self).save(*args, **kwargs)
+
+        img = Image.open(self.pic.path) # Open image
+        
+        # resize image
+        if img.height > 200 or img.width > 200:
+            output_size = (200, 200)
+            img.thumbnail(output_size) # Resize image
+            img.save(self.pic.path) # Save it again and override the larger image
+    
 
     @receiver(post_save, sender=User)
     def create_user_profile(sender, instance, created, **kwargs):

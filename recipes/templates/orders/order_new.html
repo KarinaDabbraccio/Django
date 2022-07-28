@@ -16,12 +16,17 @@
     </ul>
     <p>Total: ${{ cart.get_total_price }}</p>
 </div>
-<form action="." method="post" class="order-form">
+
+{% if cart.get_total_price > 0 %}
+  <form action="." method="post" class="order-form">
     {% csrf_token %}
 	{{ form.as_p }}
-    <p><input type="submit" value="Submit"></p>
+    <p class="centered_text"><button type="submit">Submit Order</button></p>
     {% csrf_token %}
-</form>
+  </form>
+{% else %}
+  <h3>You don't have items to order</h3>
+{% endif %}
 
 <h3>{{ msg }}</h3>
 {% endblock %}

@@ -1,15 +1,18 @@
 from django.db import models
-#from products.models import PricedProduct
 from products.models import Product
+from inventory.models import Location
+from django.contrib.auth.models import User
     
 class Order(models.Model):
     """Customer is a user who placed this order;
     User may not be deleted if he has orders;
     """
-    name = models.CharField(max_length=100)
-    email = models.EmailField()
-    created = models.DateTimeField(auto_now_add=True)
-    shipped = models.BooleanField(default=False)
+    #name = models.CharField(max_length=100)
+    #email = models.EmailField()
+    user = models.ForeignKey(User, related_name='orders', on_delete=models.CASCADE)
+    pickup_location = models.ForeignKey(Location, related_name = 'orders', on_delete = models.PROTECT);
+    date_ordered = models.DateTimeField(auto_now_add=True)
+    delivered = models.BooleanField(default=False)
     paid = models.BooleanField(default=False)
     inventory_total_cost = models.DecimalField(max_digits=7, decimal_places=2, default=0);
     

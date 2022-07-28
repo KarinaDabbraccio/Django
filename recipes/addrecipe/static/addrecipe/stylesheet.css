@@ -34,6 +34,11 @@ html,body{
 
 .centered_text{
 	text-align:center;
+}
+
+.inline_block{
+    display:inline-block;
+    padding:4px;
 }	
 
 /* --------------------------Base.html: header, footer ---*/
@@ -204,7 +209,7 @@ th {
 /*-------------------------- Form ---------- */
 form {
 	width:500px;
-	margin:10 auto 0;
+	/* margin:10 auto 0; */
 	margin: 30px 0 60px;
     padding: 20px;
     background: ivory;
@@ -255,7 +260,7 @@ form select {
 	width: 484px;
 }
 
-#id_paid, #id_shipped {
+#id_paid, #id_delivered {
   height: 22px;
   width: 50px;
 }
@@ -275,5 +280,27 @@ form button{
 	border: 0;
 	color:ivory;
 }
+
+form.profile_form {
+    width:200px;
+	margin:0 0 0 24px;
+	padding: 10px;
+	background: #FDFFFB;
+}
+	
+form.profile_form input {
+    border: 0;
+	padding: 5px;
+	margin:0;
+}
+
+
+form.profile_form button {
+    font-size: 12px;
+	margin: 0;
+	padding:6px;
+}
+
+
 
 	

@@ -42,6 +42,7 @@
       <tr>
         <th>Product</th>
 		<th>Units In-Stock</th>
+		<th>Unit Price</th>
       </tr>
     </thead>
     <tbody>
@@ -49,14 +50,15 @@
         <tr>
           <td>{{ product }}</td>
 		  <td>{{ amount }}</td> 
+		  <td>${{ product.price }}</td>
         </tr>
 		
       {% endfor %}
     </tbody>
   </table>
-  <p>Total cost of inventory in-stock: {{ total_cost }}</p>
   </br>
   <h3>All Inventory Items:</h3>
+  <p>Total cost of inventory in-stock: {{ total_cost }}</p>
 <table class="table">
     <thead class="thead">
       <tr>
@@ -72,7 +74,7 @@
           <td>{{ item.product.name }}</td>
 		  <td>{{ item.amount }}</td>
 		  <td> {{ item.cost}}</td> 
-		  <td> {% widthratio item.cost 1 item.amount %}</td> 		  
+		  <td> {{ item.get_total_cost }}</td> 		  
         </tr>		
       {% endfor %}
     </tbody>

@@ -1,12 +1,20 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block title %}My account{% endblock %}
 
 
 {% block content %}
 <br>
-<h2>Account: {{ user.username }}</h2>
-
+<img src="{{ user.profile.pic.url }}" alt="{{ comment.created_by.username }}">
+<div class="inline_block"><h2>Account: {{ user.username }}</h2><br>
+<form class="profile_form" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Upload</button>
+        </form>
+</div>
 <nav class="navbutton">
 	<ul>
 	  <li><a class="lighttext" href="{% url 'accounts:password_change' %}">Change password</a></li>
@@ -14,30 +22,38 @@
 	</ul>
 </nav>
 <h3>My Orders:</h3>
-<table class="table">
+<table>
     <thead class="thead">
       <tr>
-        <th>Name</th>
 		<th>Created at</th>
 		<th>Items</th>
         <th>Amount</th>
         <th>Paid</th>
+        <th>Location</th>
+        <th>Picked Up</th>
       </tr>
     </thead>
-    <tbody>
+    {% if orders %}
+    <tbody>   
       {% for order in orders %}
         <tr>
-          <td>{{ order.name }}</td>
-		  <td>{{ order.created }}</td>
+		  <td>{{ order.date_ordered }}</td>
 		  <td class="small-txt"> {% for p in order.get_ordered_products %}
 				{{ p.product }} - {{ p.quantity }} ,    
 			  {% endfor %}	
 		  </td>
-          <td>{{ order.get_total }}</td>
-          <td class="centered_text">{% if order.paid %} yes {% else %} no {%endif%}</td>
+          <td>${{ order.get_total }}</td>
+          <td>{% if order.paid %} Yes {% else %} No {%endif%}</td>
+          <td>{{ order.pickup_location }}</td>
+          <td class="centered_text">{% if order.delivered %} &#10004 {% else %} &#10006 {%endif%}</td>
         </tr>
       {% endfor %}
     </tbody>
+    {% else %}
+    <p>You haven't ordered anything yet &#127850</p>
+    {% endif %}
   </table>
+  
+
 
 {% endblock %}

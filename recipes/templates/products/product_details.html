@@ -16,7 +16,7 @@
 		</div>
 		<div>
 			<p>File: product_details</p>
-			<p>Weight, kg: ${{ product.weight }}</p>
+			<p>Weight, lb: {{ product.weight }}</p>
 			<p>Price per unit: ${{ product.price }}</p><br>
 			<p>{{ product.description|linebreaks }}</p>
 		</div>
@@ -26,7 +26,7 @@
 			<form class="add_cart" action="{% url 'orders:cart_add' product.id %}" method="post">
 			{{ cart_product_form }}
 			{% csrf_token %}
-			<input type="submit" value="Add to cart">
+			<p class="centered_text"><button type="submit">Add to cart</button></p>
 			</form>
 		{% else %}
 		<p class="centered_text">You can not order this item, there's none of it left now</p>

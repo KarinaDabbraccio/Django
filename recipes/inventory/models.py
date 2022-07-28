@@ -35,7 +35,9 @@ class InventoryItem(models.Model):
     location = models.ForeignKey(Location, related_name = 'inventory_items', on_delete = models.PROTECT);
     manufacturer = models.ForeignKey(Manufacturer, related_name = 'inventory_items', on_delete = models.PROTECT);
     
-         
+    
+    def get_total_cost(self) :
+        return self.amount * self.cost
     """
     Displays info in admin page
     

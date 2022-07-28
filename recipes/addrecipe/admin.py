@@ -34,7 +34,7 @@ admin.site.register(LossInventory, LossInventoryAdmin)
 
 #from Products app:
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['name', 'group', 'price',  'weight', 'description', 'pic']
+    list_display = ['name', 'group', 'price', 'weight', 'description', 'pic']
     list_filter = ['group']
     list_editable = ['price', 'weight', 'description', 'pic']
 admin.site.register(Product, ProductAdmin)
@@ -46,9 +46,9 @@ class OrderedProductInline(admin.TabularInline):
     raw_id_fields = ['product']
 
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ['email', 'name', 'created', 'shipped', 'paid', 'inventory_total_cost', Order.get_total]
-    list_filter = ['paid', 'shipped', 'email']
-    list_editable = ['paid', 'shipped']
+    list_display = ['date_ordered', 'user', 'pickup_location', 'delivered', 'paid', 'inventory_total_cost', Order.get_total]
+    list_filter = ['paid', 'delivered', 'user']
+    list_editable = ['paid', 'delivered', 'pickup_location', 'user']
     inlines = [OrderedProductInline]
 admin.site.register(Order, OrderAdmin)
 

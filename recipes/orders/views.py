@@ -57,7 +57,7 @@ def order_new(request):
                 if quantity_cart > product_cart.is_instock():
                     #one of the products is not enough in stock - deny order, keep the cart with all stuff
                     print()
-                    msg = "Product is not enought in stock: " + product_cart.name
+                    msg = "The product is not enought in stock: " + product_cart.name
                     print(msg)
                     return render(request, 'orders/order_new.html', {'cart': cart, 'form': form, 'msg':msg})
                     
@@ -96,8 +96,9 @@ def order_new(request):
                 inv.save()
             
             #after check that all items are enough, save new order and process cart    
-            order = form.save()
+            order = form.save(commit=False)
             order.inventory_total_cost = inv_cost
+            order.user = request.user
             order.save()
             for item in cart:
                 #create ordered product
@@ -110,6 +111,6 @@ def order_new(request):
             return render(request, 'orders/order_new_done.html',
                           {'order': order, 'inv_cost' : inv_cost})
     else:
-        form = OrderCreateForm
+        form = OrderCreateForm(instance = request.user)
     return render(request, 'orders/order_new.html',
                   {'cart': cart, 'form': form})

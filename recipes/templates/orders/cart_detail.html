@@ -35,8 +35,16 @@
         </tr>
         </tbody>
     </table>
-    <p>
-        <a href="{% url 'products:products_all' %}">Continue shopping</a>
-        <a href="{% url 'orders:order_new' %}" class="button">Order</a>
+    {% if user.is_authenticated %}
+    <p>     
+        {% if cart.get_total_price > 0 %}
+          <a href="{% url 'orders:order_new' %}" class="button">Order</a>
+        {% else %}
+          <p>You don't have items to order.</p>
+        {% endif %}
+          <p><a href="{% url 'products:products_all' %}">Continue shopping</a></p>
     </p>
+    {% else %}
+    <p>You need to <a href="{% url 'login' %}">login</a> or <a href="{% url 'accounts:signup' %}">signup</a> to order your products.</p>
+    {% endif %}
 {% endblock %}

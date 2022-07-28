@@ -13,6 +13,6 @@ class OrderUpdForm(forms.ModelForm):
     class Meta:
         model = Order
         fields = [
-            'paid' , 'shipped'
+            'paid' , 'delivered'
             ]
         

@@ -14,14 +14,13 @@
 
 		<table class="record_details">
 		  <tr><th>ID </th><th>{{ order.id}}</th></tr>
-		  <tr><td>Name </td><td>{{ order.name}}</td></tr>
-		  <tr><td>Email </td><td>{{ order.email }}</td></tr>
-		  <tr><td>Created </td><td>{{ order.created }}</td></tr>
+		  <tr><td>Name </td><td>{{ order.user}}</td></tr>
+		  <tr><td>Email </td><td> - </td></tr>
+		  <tr><td>Date Ordered</td><td>{{ order.date_ordered }}</td></tr>
 		  <tr><td>Paid </td><td>{{ order.paid }}</td></tr>
-		  <tr><td>Shipped </td><td>{{ order.shipped }}</td></tr>
+		  <tr><td>Shipped </td><td>{{ order.delivered }}</td></tr>
 		  <tr><td>Inventory total cost</td><td>{{ order.inventory_total_cost }}</td></tr>
 		</table>
-		<br>
 		<div>
 		<h2>Update:</h2>
 
@@ -32,7 +31,7 @@
 				 <tr><td>{{ field.label_tag }}</td><td>{{ field }}</td></tr>
 			{% endfor %}
 			</table>
-			<button type="submit">Submit</button>
+			<p class="centered_text"><button type="submit">Submit</button></p>
 		</form>
 		</div>	
 		

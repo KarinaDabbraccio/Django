@@ -14,11 +14,11 @@
 
 		<div>
 			<p>ID: {{ order.id}}</p>
-			<p>Name: {{ order.name}}</p>
-			<p>email: {{ order.email }}</p>
-			<p>created: {{ order.created }}</p>
+			<p>Name: {{ order.user}}</p>
+			<p>email: {{ order.user.name }}</p>
+			<p>created: {{ order.date_ordered }}</p>
 			<p>paid: {{ order.paid }}</p>
-			<p>shipped: {{ order.shipped }}</p><br>
+			<p>shipped: {{ order.delivered }}</p><br>
 			<br>
 			<p>inventory_total_cost: {{ order.inventory_total_cost }}</p>
 		</div>

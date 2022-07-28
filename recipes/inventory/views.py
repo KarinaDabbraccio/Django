@@ -9,6 +9,7 @@ import datetime
 from django.views.generic import DeleteView, CreateView, UpdateView
 
 from .forms import InventoryModelForm
+from django.http import JsonResponse
 
 
 @login_required
@@ -80,7 +81,7 @@ def create_inv(request):
             form = InventoryModelForm(request.POST)
             if form.is_valid():
                 form.save()
-                return redirect('home')
+                return redirect('inventory:manage_inv')
         else:
             form = InventoryModelForm()
     

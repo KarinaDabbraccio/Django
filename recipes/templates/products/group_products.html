@@ -17,6 +17,9 @@
 {% endblock %}
 
 {% block content-2 %}
+
+{% if products %}
+
 <div class="card-container">
 {% for product in products %}
 <div class="grid-card-product">
@@ -29,11 +32,16 @@
 	<div>Available</div>
 	<div>{% if product.is_available > 0 %} yes {% else %} not now {% endif %}</div>
 	<div>Weight, lb</div><div>{{ product.weight }}</div>
-	<div>Unit Price</div><div>{{ product.price }}</div>
+	<div>Unit Price</div><div>${{ product.price }}</div>
 	
 </div>
  {% endfor %}
 </div>
+
+{% else %}
+    <p>No products are available in {{ group.name }}.</p>
+{% endif %}
+
 <div class="spaces3"></div>
 
 {% endblock %}

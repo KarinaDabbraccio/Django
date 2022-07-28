@@ -9,6 +9,13 @@ from django.shortcuts import render
 from django.contrib.auth.models import User
 from accounts.models import Profile
 
+from orders.models import OrderedProduct
+from products.models import Product
+
+from django.db.models import Count
+from django.http import JsonResponse
+
+
 def home(request):
     """
     This code was used after extension of User Model to create Profile 
@@ -26,3 +33,5 @@ def home(request):
         currentUser = Profile.objects.get(username_id=request.user)
 
     return render(request, 'home.html', {'currentUser' : currentUser })
+
+

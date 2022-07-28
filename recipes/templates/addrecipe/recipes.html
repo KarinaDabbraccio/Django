@@ -29,6 +29,8 @@
         <th>Date posted</th>
       </tr>
     </thead>
+    
+     {% if recipes %}
     <tbody>
       {% for recipe in recipes %}
         <tr>
@@ -37,10 +39,14 @@
           <td>{{ recipe.starter.username }}</td>
           <td class="centered_text">{{ recipe.replies }}</td>
 		  <td class="centered_text">{{ recipe.views }}</td>
-          <td>{{ recipe.last_updated }}</td>
+          <td>{{ recipe.last_updated|date }}</td>
         </tr>
       {% endfor %}
     </tbody>
+    
+    {% else %}
+        <p>You can be the first author in this category &#128525</p>
+    {% endif %}
   </table>
 
 {% endblock %}

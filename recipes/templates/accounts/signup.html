@@ -1,15 +1,34 @@
 {% extends 'base.html' %}
 
+{% block scripts %}
+  <script>
+    $("#id_username").change(function () {
+      var form = $(this).closest("form");
+      $.ajax({
+        url: form.attr("data-validate-username-url"),
+        data: form.serialize(),
+        dataType: 'json',
+        success: function (data) {
+          if (data.is_taken) {
+            alert(data.error_message);
+          }
+        }
+      });
+
+    });
+  </script>
+{% endblock %}
+
 {% block title %}SignUpRecipes{% endblock %}
 
 {% block content %}
 <h2 class="centered_text">Sign up</h2>
 <br>
-<form method="post" novalidate class="centered">
+<form method="post" data-validate-username-url="{% url 'accounts:validate_username' %}" class="centered">
     {% csrf_token %}
     {{ form.as_p }}
     <p class="centered_text"><button type="submit">Create an account</button></p>
 </form>
 <br>
-<p class="centered_text">Already have an account? <a href="{% url 'accounts:login' %}">Log in</a></p>
+<p class="centered_text">Already have an account? <a href="{% url 'login' %}">Log in</a></p>
 {% endblock %}

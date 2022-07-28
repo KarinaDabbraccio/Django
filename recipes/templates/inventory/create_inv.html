@@ -1,6 +1,7 @@
 {% extends 'base.html'%}
 {% load static %}
 
+
 {%block title %}
   New Inv
 {% endblock %}
@@ -18,11 +19,11 @@
 
 
 {% block content-2 %}
-<form method="post">
+<form method="post" class="centered">
     {% csrf_token %}   
 	{{ form.as_p }} 
     <button type="submit">Submit</button>
   </form>
-  
+  <div class="spaces3">
 {% endblock %}
    

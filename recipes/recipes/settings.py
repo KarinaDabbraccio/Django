@@ -84,6 +84,9 @@ TEMPLATES = [
                 
                 #cart to be available:
                 'orders.context_processors.cart',
+                
+                #upload files and media
+                'django.template.context_processors.media',
             ],
         },
     },
@@ -153,8 +156,14 @@ LOGOUT_REDIRECT_URL = 'home'
 
 LOGIN_REDIRECT_URL = 'home'
 
-#email for password reset to console
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+#email for password reset to stmp Google
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'recipes.django.app@gmail.com'
+EMAIL_HOST_PASSWORD = 'fsoaxgsvayjenqzl'
+DEFAULT_FROM_EMAIL = 'Recipes app'
 
 LOGIN_URL = 'login'
 

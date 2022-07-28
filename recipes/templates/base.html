@@ -48,7 +48,7 @@
           <li><a class="lighttext" href="{% url 'accounts:my_account' %}">Account</a></li>
           <li><a class="lighttext" href="{% url 'accounts:logout' %}">Log out</a></li>
 		{% else %}
-          <li><a href="{% url 'accounts:login' %}" class="btn btn-outline-secondary">Log in</a></li>
+          <li><a href="{% url 'login' %}" class="btn btn-outline-secondary">Log in</a></li>
           <li><a href="{% url 'accounts:signup' %}" class="btn btn-primary ml-2">Sign up</a></li>
 		{% endif %}  
 		  <li><a class="lighttext" href="{% url 'addrecipe:add_recipe' %}">AddRecipes</a></li>
@@ -68,7 +68,8 @@
 </div>
   
 {% endblock body %}
-	
+	    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+        
 {% block scripts %}
 {% endblock %}
 </body>
