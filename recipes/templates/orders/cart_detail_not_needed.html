@@ -36,13 +36,17 @@
         </tbody>
     </table>
     {% if user.is_authenticated %}
+        {% if discount > 0 %}
+            <p>Your discount is: {{ discount }}%</p>
+            <p>Total after discount is: ${{ to_pay }}</p>
+        {% endif %}
     <p>     
         {% if cart.get_total_price > 0 %}
-          <a href="{% url 'orders:order_new' %}" class="button">Order</a>
+          <nav class="navbutton"><ul><li><a class="lighttext" href="{% url 'orders:order_new' %}" class="button">Order</a></li><ul></nav>
         {% else %}
           <p>You don't have items to order.</p>
         {% endif %}
-          <p><a href="{% url 'products:products_all' %}">Continue shopping</a></p>
+          <p><a href="{% url 'home' %}">Continue shopping</a></p>
     </p>
     {% else %}
     <p>You need to <a href="{% url 'login' %}">login</a> or <a href="{% url 'accounts:signup' %}">signup</a> to order your products.</p>

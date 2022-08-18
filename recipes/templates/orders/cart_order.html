@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+    Your shopping cart
+{% endblock %}
+{% block content %}
+    <h2>Shopping cart</h2>
+	<p>File: cart_order.html</p>
+	<p>     
+        <nav class="button"><ul><li><a class="lighttext" href="{% url 'home' %}">Continue shopping</a></li><ul></nav>
+        {% if cart.get_total_price > 0 %}
+            {% if user.is_authenticated %}
+              <nav class="button"><ul><li><a class="lighttext" href="#submit_order" class="button">Order</a></li><ul></nav>
+            {% else %}
+              <h3>You need to <a href="{% url 'login' %}">login</a> or <a href="{% url 'accounts:signup' %}">signup</a> to order your products.</h3>
+            {% endif %}
+        {% else %}
+            <h3>You don't have items to order.</h3>
+        {% endif %}
+    </p>
+    <table class="cart">
+        <thead>
+        <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Remove</th>
+            <th>Unit price</th>
+            <th>Price</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in cart %}
+            {% with product=item.product %}
+                <tr>
+                    <td>{{ product.name }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td><a href="{% url 'orders:cart_remove' product.id%}">Remove</a></td>
+                    <td>${{ item.price }}</td>
+                    <td>${{ item.total_price }}</td>
+                </tr>
+            {% endwith %}
+        {% endfor %}
+        <tr>
+            <td>Total</td>
+            <td colspan="3"></td>
+            <td>${{ cart.get_total_price }}</td>
+        </tr>
+        {% if discount > 0 %}
+        <tr>
+            <td>Discount</td>
+            <td colspan="3"></td>
+            <td>-{{ discount }}%</td>
+        </tr>
+        <tr>
+            <td>Total after discount</td>
+            <td colspan="3"></td>
+            <td>${{ to_pay }}</td>
+        </tr>
+        {% endif %}
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block content-2 %}
+{% if user.is_authenticated %}
+<h2 id="submit_order">Submit Order</h2>
+<div class="order-info">
+	<ul>
+      {% for item in cart %}
+        <li>
+        {{ item.quantity }}x {{ item.product.name }}
+        <span>${{ item.total_price }}</span>
+        </li>
+      {% endfor %}
+    </ul>
+    <p>Total: ${{ cart.get_total_price }}</p>
+    <p>Your discount is: {{ discount }}%</p>
+    <p>Total after discount is: ${{ to_pay }}</p>
+</div>
+
+{% if cart.get_total_price > 0 %}
+  <form action="." method="post" class="order-form">
+    {% csrf_token %}
+	{{ form.as_p }}
+    <p class="centered_text"><button type="submit">Submit Order</button></p>
+    {% csrf_token %}
+  </form>
+{% else %}
+<br>
+  <h3>You don't have items to order</h3>
+{% endif %}
+
+<h3>{{ msg }}</h3>
+{% endif %}
+{% endblock %}

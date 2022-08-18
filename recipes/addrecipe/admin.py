@@ -16,7 +16,7 @@ admin.site.register(Comment)
 admin.site.register(Profile)
 admin.site.register(SoldItem)
 
-#admin.site.register(Manufacturer)
+admin.site.register(Manufacturer)
 #admin.site.register(Location)
 #admin.site.register(InventoryItem)
 class InventoryItemAdmin(admin.ModelAdmin):
@@ -46,9 +46,9 @@ class OrderedProductInline(admin.TabularInline):
     raw_id_fields = ['product']
 
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ['date_ordered', 'user', 'pickup_location', 'delivered', 'paid', 'inventory_total_cost', Order.get_total]
-    list_filter = ['paid', 'delivered', 'user']
-    list_editable = ['paid', 'delivered', 'pickup_location', 'user']
+    list_display = ['date_ordered', 'user', 'pickup_location', 'picked_up', 'paid_amount', 'inventory_total_cost', Order.get_total]
+    list_filter = ['paid_amount', 'picked_up', 'user']
+    list_editable = ['paid_amount', 'picked_up', 'pickup_location', 'user']
     inlines = [OrderedProductInline]
 admin.site.register(Order, OrderAdmin)
 

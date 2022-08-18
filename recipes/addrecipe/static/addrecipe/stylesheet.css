@@ -26,6 +26,7 @@ html,body{
 .content {
 	max-width:960px;
 	margin:10px auto;
+	padding:0 1%;
 	}
 	
 .centered {
@@ -45,7 +46,7 @@ html,body{
 header, footer {
 	background: darkolivegreen; /* #556B2F */
 	color:ivory;
-	padding-top:12px;
+	padding:12px;
 	font-family: 'Quicksand', sans-serif; 
 	
 }
@@ -116,23 +117,30 @@ li{
 }	
 
 .navbutton ul{
-	margin: 30px 0;
-}
-
-.navbutton ul li{
-	margin-right: 12px;
+	margin: 20px 0;
+	padding-left:5%;
 }
 
 .navbutton li a{
+	color:darkolivegreen;
+}
+
+.button li a{
 	padding:10px;
 	text-decoration:none;
 	background: darkolivegreen;
 	border-radius: 5px;
-	color:ivory;		
+	color:ivory;
+}
+
+.button ul{
+	margin: 20px 0;
+	padding-left:30px;
 }
 
 .navbutton li a:hover{
 	background: olivedrab;	
+	border-radius: 5px;
 }
 /*-------------------------- Links ---------- */
 a.lighttext:visited {
@@ -235,7 +243,7 @@ form input, select, .form-input {
 	border-radius: 5px;
 }
 .checkbox_form{
-	width: 170px;
+	width: 200px;
 }
 
 .checkbox_form table{
@@ -260,9 +268,9 @@ form select {
 	width: 484px;
 }
 
-#id_paid, #id_delivered {
+#id_paid_amount, #id_picked_up {
   height: 22px;
-  width: 50px;
+  width: 60px;
 }
 
 form input[type=text]:focus {
@@ -301,6 +309,130 @@ form.profile_form button {
 	padding:6px;
 }
 
+/*   styleproducts -------*/
 
+.card-container {
+  width: 96%;
+  padding: 2%;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 32% 32% 32%; 
+  gap:2%;
+}
+
+.card-2 {
+  grid-template-columns: 48% 48%; 
+  gap: 2%;
+
+}
+
+.grid-card-product {
+  padding: 4%;
+  border: 2px solid #E2F0CB;
+  border-radius: 9px;
+  background-color: #FFF;
+  display: grid;
+  grid-template-columns: auto auto;
+}
+
+.grid-row { grid-column:1 / 3; }
+
+.grid-img {
+  width: 100%;
+  height:270px;
+  border-radius: 9px;
+  background-color: #CCDDFF;
+  overflow:hidden;
+  margin:0 0 15px;
+}
+
+.group-img{
+	height:150px;
+}
+
+img {
+	height:100%;
+    object-fit: cover;
+}
+
+.parent_img {
+		position:relative;
+		z-index:1;
+		}
+	
+	.pop_up{
+		position:absolute;
+		z-index:2;
+		left:0;
+		right:0;
+		width:100%;
+		height:100px;
+		top:50%;
+		margin-top:-50px;
+		background:rgba(245, 255, 225,.6);
+		display:none;
+		padding-top:30px;
+		}
+		
+	.parent_img:hover .pop_up{
+		display:block;
+	}
+	
+.product_img{
+	max-height: 270px;
+	object-fit: cover;
+	border: 2px solid #E2F0CB;
+	border-radius:9px;
+	max-width:100%;
+}
+
+.p-details {
+  display: grid;
+  grid-template-columns: 32% 46% 18%; 
+}
+/*-------------------------- Form ---------- */
+
+
+form.add_cart {
+	width:120px;
+	padding:10px 20px;
+	margin:0;
+}
+	
+form.add_cart select {
+    width: 100px;
+	padding: 5px;
+}
+
+  /*----------------- For mobile phones: ---------*/
+
+@media only screen and (max-width: 620px) {
+
+  .card-container {
+    grid-template-columns: 48% 48%; 
+    gap: 2%;
+  } 
+  
+  .card-2 {
+    grid-template-columns: 100%; 
+  }
+  
+    h2{	
+    	font-size:36px;
+    	padding:15px 10px 15px 30px;
+    }
+
+    h3{
+    	font-size:24px;
+    	padding:0px 10px 20px 30px;
+    }
+    .spaces, .spaces3 {
+    	height:10px;
+    }
+    
+    header img {
+    	max-width:0;
+    }
+}
 
 	

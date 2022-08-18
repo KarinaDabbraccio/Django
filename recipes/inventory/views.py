@@ -6,11 +6,10 @@ from accounts.models import Profile
 from inventory.models import InventoryItem, LossInventory
 from orders.models import Order
 import datetime
-from django.views.generic import DeleteView, CreateView, UpdateView
 
 from .forms import InventoryModelForm
-from django.http import JsonResponse
 
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 @login_required
 def manage_inv(request):
@@ -33,10 +32,30 @@ def manage_inv(request):
             amount=item.amount
             total_cost+=item.cost * amount
             groups_inventory_list[product] = groups_inventory_list.get(product , 0) + amount
+        
+        # create the chart data
+        labelsk = []
+        datak = []       
+        for k,v in groups_inventory_list.items():
+            labelsk.append(k.name)
+            datak.append(v)    
+        
+        #pagination for the list of inventory items
+        page = request.GET.get('page', 1)
+        paginator = Paginator(items, 6)
+        try:
+            items = paginator.page(page)
+        except PageNotAnInteger:
+            items = paginator.page(1)
+        except EmptyPage:
+            items = paginator.page(paginator.num_pages)
                 
     return render(request, 'inventory/manage_inv.html', {'expired': expired,'items': items,
                                                          'groups_inventory_list': groups_inventory_list,
-                                                         'total_cost': total_cost})
+                                                         'total_cost': total_cost,
+                                                         'labels': labelsk,
+                                                         'data': datak, })                
+
 
 @login_required
 def delete_expired(request):
@@ -88,34 +107,6 @@ def create_inv(request):
     return render(request, 'inventory/create_inv.html', {'form': form})
 
 
-def deliver_ordered(request):
-    """From all available Inventory subtract ordered
-    Method for inventory - FIFO - first sell the items that were registered earlier
-    """
-    # extract expired
-    today = datetime.date.today()
-    items = InventoryItem.objects.exclude(sell_by__lte=today).order_by('registered_at')
-    
-    orders = Order.objects.filter(inProduction=False).order_by('created')
-    items = InventoryItem.objects.all().order_by('cost')
-    
-    ordered_items_list = dict()
-    
-    for order in orders:
-        oredred_products = order.get_ordered_products()
-        for op in oredred_products:
-            product = op.product
-            price = op.product.price
-            quantity = op.quantity
-            ordered_items_list[product] = ordered_items_list.get(product, 0) + quantity
-            
-    print("________________ALL!!!")
-    # {<PricedProduct: Chocolate - Gr: IceCream - 7.50>: 18, ... <PricedProduct: Chocolate Crumbs - Gr: Cookies - 8.00>: 1}
-    print(ordered_items_list.values())
-    print(ordered_items_list.keys())
-    print('price')
-    for key in ordered_items_list.keys():
-        print(key.price)
 
                 
                 

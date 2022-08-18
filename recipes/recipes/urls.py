@@ -29,15 +29,16 @@ urlpatterns = [
     
     path('accounts/', include('accounts.urls')),
     
+    #home main page and products
+    path('', views.home, name='home'), 
+    path('group<int:pk>/', views.group_products, name='group_products'),
+    path('details/<int:product_id>/', views.product_details, name='product_details'),
+    
     #my apps
     path('addrecipe/', include('addrecipe.urls')),
-    path('products/', include('products.urls')),
     path('orders/', include('orders.urls')),
     path('inventory/', include('inventory.urls')),
     path('sales/', include('sales.urls')),
-    
-    #home main page
-    path('', views.home, name='home'), 
     
     #login
     path('login/', auth_views.LoginView.as_view(template_name='accounts/login.html'), name='login'),

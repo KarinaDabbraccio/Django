@@ -4,48 +4,16 @@
 
 
 {% block content %}
-<br>
-<h2>Account: {{ user.username }}</h2>
 
 <nav class="navbutton">
 	<ul>
-	  <li><a class="lighttext" href="{% url 'sales:all_orders' %}">All Orders</a></li>
-	  <li><a class="lighttext" href="{% url 'inventory:manage_inv' %}">Inventory</a></li>
+	  <li><a href="{% url 'sales:all_orders' %}">All Orders</a></li>
+	  <li><a href="{% url 'inventory:manage_inv' %}">Inventory</a></li>
 	</ul>
 </nav>
-<h3>All Orders:</h3>
-<table class="table">
-    <thead class="thead">
-      <tr>
-        <th>ID</th>
 
-		<th>Date Ordered</th>
-		<th>Items</th>
-        <th>Income</th>
-		<th>Total cost</th>
-        <th>Paid</th>
-		<th>Delivered</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for order in orders %}
-        <tr>
-          <td>{{ order.id }}</td>
-		  <td><a href="{% url 'sales:order_details' order.id %}">{{ order.date_ordered|date }}</a></td>
-		  <td class="small-txt"> {% for p in order.get_ordered_products %}
-				{{ p.product }} - {{ p.quantity }} ,    
-			  {% endfor %}	
-		  </td>
-          <td>{{ order.get_total }}</td>
-		  <td>{{ order.inventory_total_cost }}</td>
-          <td>{% if order.paid %} + {% else %} NO {%endif%}</td>
-		  <td>{% if order.delivered %} + {% else %} NO {%endif%}</td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-  
-  <h3>Ordered Items sum:</h3>
+<h3>Ordered Items Summary</h3>
+
 <table class="table">
     <thead class="thead">
       <tr>
@@ -64,15 +32,71 @@
         </tr>
       {% endfor %}
     </tbody>
+</table>
+
+<div id="container" style="width: 80%;">
+    <canvas id="pie-chart"></canvas>
+</div>
+
+<br>
+<h3>All Orders:</h3>
+<table class="table">
+    <thead class="thead">
+      <tr>
+        <th>ID</th>
+
+		<th>Date Ordered</th>
+		<th>Items</th>
+		<th>Init Price</th>
+        <th>Received amount</th>
+		<th>Total cost</th>
+		<th>Delivered</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for order in orders %}
+        <tr>
+          <td>{{ order.id }}</td>
+		  <td><a href="{% url 'sales:order_details' order.id %}">{{ order.date_ordered|date }}</a></td>
+		  <td class="small-txt"> {% for p in order.get_ordered_products %}
+				{{ p.product }} - {{ p.quantity }} ,    
+			  {% endfor %}	
+		  </td>
+		  <td>{{ order.get_total }}</td>
+          <td>{{ order.paid_amount }}</td>
+		  <td>{{ order.inventory_total_cost }}</td>
+		  <td>{% if order.picked_up %} + {% else %} NO {%endif%}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
   </table>
   
-<div class="spaces"></div>
+  {% if orders.has_other_pages %}
+  <ul class="pagination">
+    {% if orders.has_previous %}
+      <li><a href="?page={{ orders.previous_page_number }}">&laquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&laquo;</span></li>
+    {% endif %}
+    {% for i in orders.paginator.page_range %}
+      {% if orders.number == i %}
+        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+      {% else %}
+        <li><a href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if orders.has_next %}
+      <li><a href="?page={{ orders.next_page_number }}">&raquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&raquo;</span></li>
+    {% endif %}
+  </ul>
+  {% endif %}
+  
+<div class="spaces3"></div>
 {% endblock %}
 
-{% block content-2 %}
-    <div id="container" style="width: 50%;">
-    <canvas id="pie-chart"></canvas>
-  </div>
+{% block scripts %}
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
   <script>
@@ -102,5 +126,4 @@
 
   </script>
 
-<div class="spaces3"></div>
 {% endblock %}

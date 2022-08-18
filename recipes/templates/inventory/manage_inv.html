@@ -4,19 +4,24 @@
 
 
 {% block content %}
-<br>
-<h2>Account: {{ user.username }}</h2>
 
 <nav class="navbutton">
 	<ul>
-	  <li><a class="lighttext" href="{% url 'sales:all_orders' %}">All Orders</a></li>
-	  <li><a class="lighttext" href="{% url 'inventory:delete_expired' %}">Delete Expired</a></li>
-	  <li><a class="lighttext" href="{% url 'inventory:create_inv' %}">Create inv</a></li>
+	  <li><a href="{% url 'sales:all_orders' %}">All Orders</a></li>
+	  <li><a href="{% url 'inventory:create_inv' %}">Add Inventory</a></li>
+	  {% if expired %}
+	  <li><a href="{% url 'inventory:delete_expired' %}">Delete Expired</a></li>
+	  {% endif %}
 	</ul>
 </nav>
 
+<div id="container" style="width: 80%;">
+    <canvas id="pie-chart"></canvas>
+</div>
+<br>
+{% if expired %}
  <h3>Expired Inventory:</h3>
-<table class="table">
+ <table class="table">
     <thead class="thead">
       <tr>
         <th>Product</th>
@@ -35,8 +40,11 @@
       {% endfor %}
     </tbody>
   </table>
-  
-  <h3>Groups Inventory:</h3>
+{% else %}
+<h3>There is no expired inventory in stock.</h3>
+{% endif %}
+ 
+  <h3>Groups of Inventory:</h3>
   <table class="table">
     <thead class="thead">
       <tr>
@@ -56,10 +64,11 @@
       {% endfor %}
     </tbody>
   </table>
+ 
   </br>
   <h3>All Inventory Items:</h3>
   <p>Total cost of inventory in-stock: {{ total_cost }}</p>
-<table class="table">
+  <table class="table">
     <thead class="thead">
       <tr>
         <th>Product</th>
@@ -80,5 +89,59 @@
     </tbody>
   </table>
   
+  {% if items.has_other_pages %}
+  <ul class="pagination">
+    {% if items.has_previous %}
+      <li><a href="?page={{ items.previous_page_number }}">&laquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&laquo;</span></li>
+    {% endif %}
+    {% for i in items.paginator.page_range %}
+      {% if items.number == i %}
+        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+      {% else %}
+        <li><a href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if items.has_next %}
+      <li><a href="?page={{ items.next_page_number }}">&raquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&raquo;</span></li>
+    {% endif %}
+  </ul>
+  {% endif %}
   <div class="spaces"></div>
+{% endblock %}
+
+{% block scripts %}
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+  <script>
+
+   var config = {
+      type: 'bar',
+      data: {
+        datasets: [{
+          data: {{ data|safe }},
+          backgroundColor: [
+            '#035E3E', '#5C4671', '#5B5E03', '#5E0333', '#32BABA', '#035E56',
+            '#5E0320', '#03565E', '#46714D', '#5E0333', '#03145E', '#80BA32',
+          ],
+          label: 'Units InStock'
+        }],
+        labels: {{ labels|safe }}
+      },
+      options: {
+        responsive: true,
+        legend: {display: false }
+      }
+    };
+
+    window.onload = function() {
+      var ctx = document.getElementById('pie-chart').getContext('2d');
+      window.myPie = new Chart(ctx, config);
+    };
+
+  </script>
+
 {% endblock %}

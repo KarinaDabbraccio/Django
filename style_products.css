@@ -1,11 +1,10 @@
 .card-container {
-  width: 100%;
-  padding: 0;
+  width: 96%;
+  padding: 2%;
   margin: 0;
   display: grid;
   grid-template-columns: 32% 32% 32%; 
-  gap: 2%;
-
+  gap:2%;
 }
 
 .card-2 {
@@ -90,4 +89,17 @@ form.add_cart {
 form.add_cart select {
     width: 100px;
 	padding: 5px;
+}
+
+@media only screen and (max-width: 620px) {
+  /*----------------- For mobile phones: */
+  .card-container {
+    grid-template-columns: 48% 48%; 
+    gap: 2%;
+  } 
+  
+  .card-2 {
+    grid-template-columns: 100%; 
+  }
+  
 }

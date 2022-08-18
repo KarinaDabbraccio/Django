@@ -11,7 +11,7 @@
     <p>File : group_products</p>
 	<nav class="navbutton">
 	<ul>
-	  <li><a href="{% url 'products:products_all' %}">All products</a></li></ul>
+	  <li><a href="{% url 'home' %}">All products</a></li></ul>
 	</nav>
 	
 {% endblock %}
@@ -24,7 +24,7 @@
 {% for product in products %}
 <div class="grid-card-product">
 	<div class="grid-img grid-row parent_img">
-		<a href="{% url 'products:product_details' product.id %}">
+		<a href="{% url 'product_details' product.id %}">
 		<div class="pop_up"><h2 class = "centered_text">I want this {{ group.name }}<h2></div>
 		<img src="{{ product.pic.url }}" >
 	</div>

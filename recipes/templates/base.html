@@ -4,7 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-	<title>{% block title %}RECIPES{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>{% block title %}RECIPES-products{% endblock %}</title>
 	<link rel="stylesheet" type="text/css" href="{% static 'addrecipe/reset.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'addrecipe/stylesheet.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'addrecipe/style_products.css' %}">
@@ -43,7 +44,6 @@
 	  <nav class="navbar">
 		<ul>
 		  <li><a class="lighttext" href="{% url 'home' %}">Home</a></li>
-		  <li><a class="lighttext" href="{% url 'products:products_all' %}">Products</a></li>
 		{% if user.is_authenticated %}
           <li><a class="lighttext" href="{% url 'accounts:my_account' %}">Account</a></li>
           <li><a class="lighttext" href="{% url 'accounts:logout' %}">Log out</a></li>

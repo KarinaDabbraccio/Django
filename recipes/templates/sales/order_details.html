@@ -4,7 +4,6 @@
     OrderDetails
 {% endblock %}
 {% block content %}
-    <h2>Order details</h2>
 	<nav class="navbutton">
 		<ul>
 		<li><a href="{% url 'sales:all_orders' %}">All Orders</a></li>
@@ -15,10 +14,11 @@
 		<table class="record_details">
 		  <tr><th>ID </th><th>{{ order.id}}</th></tr>
 		  <tr><td>Name </td><td>{{ order.user}}</td></tr>
-		  <tr><td>Email </td><td> - </td></tr>
+		  <tr><td>Email </td><td> {{ order.user.email }} </td></tr>
 		  <tr><td>Date Ordered</td><td>{{ order.date_ordered }}</td></tr>
-		  <tr><td>Paid </td><td>{{ order.paid }}</td></tr>
-		  <tr><td>Shipped </td><td>{{ order.delivered }}</td></tr>
+		  <tr><td>Received Amount </td><td>{{ order.paid_amount }}</td></tr>
+		  <tr><td>Initial Amount </td><td>{{ order.get_total }}</td></tr>
+		  <tr><td>Picked_up </td><td>{{ order.picked_up }}</td></tr>
 		  <tr><td>Inventory total cost</td><td>{{ order.inventory_total_cost }}</td></tr>
 		</table>
 		<div>
@@ -36,5 +36,5 @@
 		</div>	
 		
     </div>
-	
+	<div class="spaces"></div>
 {% endblock %}

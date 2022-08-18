@@ -1,20 +1,21 @@
 from django.shortcuts import render, redirect, get_object_or_404
 #from products.models import PricedProduct
 from products.models import Product
-from django.db.models import Count
 
 from django.views.decorators.http import require_POST
 
 from .models import OrderedProduct
 from .forms import CartAddProductForm, OrderCreateForm
 from .cart import Cart
-import math
+from decimal import Decimal
 from inventory.models import InventoryItem
 
 
 # CART 
 @require_POST
 def cart_add(request, product_id):
+    """ Add this product to cart, appears on the product_detail page
+    """
     cart = Cart(request)
     product = get_object_or_404(Product, id=product_id)
     form = CartAddProductForm(request.POST)
@@ -26,19 +27,25 @@ def cart_add(request, product_id):
     return redirect('orders:cart_detail')
 
 def cart_remove(request, product_id):
+    """ Remove this product from cart, appears as link in the cart_detail
+    """
     cart = Cart(request)
     product = get_object_or_404(Product, id=product_id)
     cart.remove(product)
     return redirect('orders:cart_detail')
 
 def cart_detail(request):
+    """ If user not logged in: show cart details only
+    If logged in: show cart detail and Order Form
+    """
     cart = Cart(request)
-    return render(request, 'orders/cart_detail.html', {'cart': cart})
-
-#ORDER
-def order_new(request):
-    cart = Cart(request)
-     
+    discount = 0
+    to_pay = 0 
+    if request.user.is_authenticated:
+        discount = request.user.profile.user_discount
+        to_pay = Decimal(cart.get_total_price() * Decimal(1 - discount/100)).quantize(Decimal('1.00'))
+        
+    #discount = request.user.profile.user_discount
     if request.method == 'POST':
         form = OrderCreateForm(request.POST)
         inv_cost=0
@@ -86,7 +93,7 @@ def order_new(request):
                                 #inv.save()
                                 inv_upd_list.append(inv)
                         else:
-                        #exit loop when deleted/updated as much as ordered
+                            #exit loop when deleted/updated as much as ordered
                             break
             
             #update the database
@@ -98,6 +105,9 @@ def order_new(request):
             #after check that all items are enough, save new order and process cart    
             order = form.save(commit=False)
             order.inventory_total_cost = inv_cost
+            #apply discount
+            to_pay = cart.get_total_price() * Decimal(1 - discount/100)
+            order.paid_amount = to_pay
             order.user = request.user
             order.save()
             for item in cart:
@@ -109,8 +119,11 @@ def order_new(request):
             # clear cart
             cart.clear()
             return render(request, 'orders/order_new_done.html',
-                          {'order': order, 'inv_cost' : inv_cost})
+                          {'order': order, 'inv_cost' : inv_cost, 'discount':discount})
     else:
-        form = OrderCreateForm(instance = request.user)
-    return render(request, 'orders/order_new.html',
-                  {'cart': cart, 'form': form})
+        if request.user.is_authenticated:
+            form = OrderCreateForm(instance = request.user)
+        else:
+            form = 0
+    return render(request, 'orders/cart_order.html',
+                  {'cart': cart, 'form': form, 'discount':discount, 'to_pay':to_pay})

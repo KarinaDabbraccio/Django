@@ -2,6 +2,7 @@ from django.db import models
 from products.models import Product
 
 
+
 class Manufacturer(models.Model):
     name = models.CharField(max_length=100)
     address = models.CharField(max_length=200)
@@ -25,11 +26,13 @@ class Location(models.Model):
     
 
 class InventoryItem(models.Model):
-    
+    """Info on Inventory as it arrives: product, cost, amount.
+        May expire or be damaged - then not able to sell and its cost is a loss.
+        Location - where the item is stored
+       """
     product = models.ForeignKey(Product, related_name = 'inventory_items', on_delete = models.PROTECT);
     amount = models.PositiveSmallIntegerField(default = 1);
     registered_at = models.DateField(auto_now_add=True);
-    # DateField
     cost = models.DecimalField(max_digits=7, decimal_places=2, default = '0');
     sell_by = models.DateField(null=True, blank=True);
     location = models.ForeignKey(Location, related_name = 'inventory_items', on_delete = models.PROTECT);
@@ -52,3 +55,12 @@ class LossInventory(models.Model):
     cost = models.DecimalField(max_digits=7, decimal_places=2, default = '0');
     location = models.ForeignKey(Location, related_name = 'inventory_loss', on_delete = models.CASCADE);
     manufacturer = models.ForeignKey(Manufacturer, related_name = 'inventory_loss', on_delete = models.CASCADE);
+    
+    
+    
+    
+    
+    
+    
+    
+    

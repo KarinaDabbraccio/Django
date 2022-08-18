@@ -7,8 +7,10 @@ from PIL import Image
 
 class Profile(models.Model):
     '''
-    Choices for 'user_group' to identify users as 
-    either basic user or Manager who has additional access rights
+    Choices for 'user_group' to identify users as either 
+        basic user or Manager who has additional access rights
+    User_discount : may apply to get discount, if ordered over certain 
+        amount total. 
     '''
     USER_TYPE = [
         ('U', 'User'),
@@ -18,6 +20,7 @@ class Profile(models.Model):
     username = models.OneToOneField(User, on_delete=models.CASCADE)
     pic = models.ImageField(upload_to='images/users', default = 'default.png')
     user_group = models.CharField(max_length=1, default = 'U', choices=USER_TYPE)
+    user_discount = models.PositiveSmallIntegerField(default = 0);
     
     # Override the save method of the model
     def save(self, *args, **kwargs):

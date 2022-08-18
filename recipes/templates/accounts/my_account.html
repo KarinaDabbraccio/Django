@@ -4,7 +4,6 @@
 
 {% block title %}My account{% endblock %}
 
-
 {% block content %}
 <br>
 <img src="{{ user.profile.pic.url }}" alt="{{ comment.created_by.username }}">
@@ -19,9 +18,12 @@
 	<ul>
 	  <li><a class="lighttext" href="{% url 'accounts:password_change' %}">Change password</a></li>
 	  <li><a class="lighttext" href="{% url 'accounts:update_my_account' %}">Update Info</a></li>
+
 	</ul>
 </nav>
 <h3>My Orders:</h3>
+<p>{{ message }}<p>
+<p>TOTAL SPENT: {{ total }}<p>
 <table>
     <thead class="thead">
       <tr>
@@ -43,9 +45,9 @@
 			  {% endfor %}	
 		  </td>
           <td>${{ order.get_total }}</td>
-          <td>{% if order.paid %} Yes {% else %} No {%endif%}</td>
+          <td>${{ order.paid_amount }}</td>
           <td>{{ order.pickup_location }}</td>
-          <td class="centered_text">{% if order.delivered %} &#10004 {% else %} &#10006 {%endif%}</td>
+          <td class="centered_text">{% if order.picked_up %} &#10004 {% else %} &#10006 {%endif%}</td>
         </tr>
       {% endfor %}
     </tbody>
@@ -54,6 +56,30 @@
     {% endif %}
   </table>
   
+  {% if orders.has_other_pages %}
+  <ul class="pagination">
+    {% if orders.has_previous %}
+      <li><a href="?page={{ orders.previous_page_number }}">&laquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&laquo;</span></li>
+    {% endif %}
+    {% for i in orders.paginator.page_range %}
+      {% if orders.number == i %}
+        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+      {% else %}
+        <li><a href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if orders.has_next %}
+      <li><a href="?page={{ orders.next_page_number }}">&raquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&raquo;</span></li>
+    {% endif %}
+  </ul>
+  {% endif %}
+  
+  
+  <div class="spaces"></div>
 
 
 {% endblock %}

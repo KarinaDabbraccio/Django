@@ -5,15 +5,19 @@ from django.contrib.auth.models import User
     
 class Order(models.Model):
     """Customer is a user who placed this order;
-    User may not be deleted if he has orders;
+        User may not be deleted if he has orders;
+        Consider all orders are paid before submission, 
+        but this feature is not implemented.
+        paid_amount = order.get_total * user.profile.user_discount
+        picked_up : user picked up their order from the location
     """
     #name = models.CharField(max_length=100)
     #email = models.EmailField()
     user = models.ForeignKey(User, related_name='orders', on_delete=models.CASCADE)
     pickup_location = models.ForeignKey(Location, related_name = 'orders', on_delete = models.PROTECT);
     date_ordered = models.DateTimeField(auto_now_add=True)
-    delivered = models.BooleanField(default=False)
-    paid = models.BooleanField(default=False)
+    picked_up = models.BooleanField(default=False)
+    paid_amount = models.DecimalField(max_digits=7, decimal_places=2, default=0);
     inventory_total_cost = models.DecimalField(max_digits=7, decimal_places=2, default=0);
     
     def get_total(self):

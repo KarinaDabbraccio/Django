@@ -1,32 +1,42 @@
 {% extends 'base.html'%}
+
 {% load static %}
-
-
 
 {% block content %}
 
-<br>  	  
-<h1>File : home</h1>
-<br>
-<p> Users: {{ currentUser }}
-, {% if currentUser.user_group == 'M' %} Manager {% else %} User {% endif %}</p>
-<p id="demo"> Date today </p>
-<input type="button" value="date" onclick="document.getElementById('demo').innerHTML = Date()">
-
 {% if currentUser.user_group == 'M' %}
-<p> Management links:</p>
 <nav class="navbutton">
 	<ul>
-	  <li><a class="lighttext" href="{% url 'sales:all_orders' %}">All Orders</a></li>
-	  <li><a class="lighttext" href="{% url 'inventory:manage_inv' %}">Inventory</a></li>
-
+	  <li><a href="{% url 'sales:all_orders' %}">All Orders</a></li>
+	  <li><a href="{% url 'inventory:manage_inv' %}">Inventory</a></li>
 	</ul>
 </nav>
-
-
 {% endif %}
+
+<p> User: {{ currentUser }}, {% if currentUser.user_group == 'M' %} 
+Manager {% else %} User {% endif %} view</p>
 {% endblock %}
 
+{% block content-2 %}
+
+{% if groups %}
+
+	<div class="card-container card-2">
+	{% for group in groups %}
+	<div class="grid-card-product card-group">
+		<div class="grid-img group-img grid-row"><a href="{% url 'group_products' group.pk %}">
+			<img class="grid-img" src="{{ group.pic.url }}">
+		</a></div>
+		<div class="grid-row centered_text"><a href="{% url 'group_products' group.pk %}"><h3>{{ group.name }}</h3></a></div>
+		<div>{{ group.get_products_count }} products</div>
+	</div>
+	{% endfor %}
+	</div>
+{% else %}
+    <p>No categories are available.</p>
+{% endif %}
+
+{% endblock %}
 
 {% block scripts %}
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
