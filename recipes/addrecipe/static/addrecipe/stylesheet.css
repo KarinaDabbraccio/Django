@@ -78,6 +78,10 @@ footer{
 
 }
 
+.mobilemenu{
+	display:none;
+}
+
 h2, h3{
 	font-family: 'Quicksand', sans-serif;
 	color: darkolivegreen;
@@ -433,6 +437,48 @@ form.add_cart select {
     header img {
     	max-width:0;
     }
+	/* --- hide topmenu and show mibileMenu ---*/
+	.topmenu {
+		display:none;
+	}
+	
+	.mobilemenu{
+	display:block;
+	}
+	
+	.parentmenu {
+		position:relative;
+	}
+	
+	.submenu{
+		position:absolute;
+		z-index:3;
+		left:0;
+		top:100%;
+		display:none;
+		}
+		
+	.navbar ul li ul{
+		text-align:left;
+	}
+	
+	.parentmenu:hover .submenu {
+		display:block;
+	}
+	.submenu li a{
+		text-decoration:none;
+		text-transform:uppercase;
+		padding:10px;
+		width: 128px;
+		display:block;
+		background:darkolivegreen;
+		border-radius: 3px;
+		border: 1px ivory solid;
+	}
+	
+	.submenu li a:hover{
+		background:olive;
+	}
 }
 
 	
