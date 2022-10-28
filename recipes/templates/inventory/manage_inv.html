@@ -8,43 +8,22 @@
 <nav class="navbutton">
 	<ul>
 	  <li><a href="{% url 'sales:all_orders' %}">All Orders</a></li>
-	  <li><a href="{% url 'inventory:create_inv' %}">Add Inventory</a></li>
-	  {% if expired %}
-	  <li><a href="{% url 'inventory:delete_expired' %}">Delete Expired</a></li>
-	  {% endif %}
 	</ul>
 </nav>
 
-<div id="container" style="width: 80%;">
-    <canvas id="pie-chart"></canvas>
-</div>
-<br>
-{% if expired %}
- <h3>Expired Inventory:</h3>
- <table class="table">
-    <thead class="thead">
-      <tr>
-        <th>Product</th>
-		<th>Amount, units</th>
-		<th>Cost</th>
+<h3>Inventory Groups</h3>
+<p>This data includes expired inventory items, if any exist. Total cost of expired inventory is {{ total_cost_expired}}</p>
+<nav class="button">
+    <ul>
+        <li><a class="lighttext" id="btn-expand1" onclick="expandtable(1)">Show Groups</a></li>
+        <li><a class="lighttext" href="{% url 'inventory:create_inv' %}">Add Inventory</a></li>
+        {% if expired %}
+        <li><a class="lighttext" href="{% url 'inventory:delete_expired' %}">Delete Expired</a></li>
+        {% endif %}
+    <ul>
+</nav>
 
-      </tr>
-    </thead>
-    <tbody>
-      {% for item in expired %}
-        <tr>
-          <td>{{ item.product.name }}</td>
-		  <td>{{ item.amount }}</td>
-		  <td> {{ item.cost}}</td>  
-        </tr>		
-      {% endfor %}
-    </tbody>
-  </table>
-{% else %}
-<h3>There is no expired inventory in stock.</h3>
-{% endif %}
- 
-  <h3>Groups of Inventory:</h3>
+<div id="inv-groups" style="display:none">
   <table class="table">
     <thead class="thead">
       <tr>
@@ -64,6 +43,46 @@
       {% endfor %}
     </tbody>
   </table>
+</div>
+
+<div id="container" style="width: 80%;">
+<br>
+    <canvas id="pie-chart"></canvas>
+</div>
+<br>
+
+{% if expired %}
+<nav class="button">
+    <ul>
+        <li><a class="lighttext" id="btn-expand2" onclick="expandtable(2)">Show Expired Items</a></li>
+        <li><a class="lighttext" href="{% url 'inventory:delete_expired' %}">Delete Expired Items</a></li>
+    <ul>
+</nav>
+
+<div id="inv-expired" style="display:none"> 
+ <table class="table">
+    <thead class="thead">
+      <tr>
+        <th>Product</th>
+		<th>Amount, units</th>
+		<th>Cost</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in expired %}
+        <tr>
+          <td>{{ item.product.name }}</td>
+		  <td>{{ item.amount }}</td>
+		  <td> {{ item.cost}}</td>  
+        </tr>		
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<h3>There is no expired inventory in stock.</h3>
+{% endif %}
  
   </br>
   <h3>All Inventory Items:</h3>
@@ -133,7 +152,16 @@
       },
       options: {
         responsive: true,
-        legend: {display: false }
+        legend: {display: false },
+        scales: {
+        yAxes: [{
+            display: true,
+            ticks: {
+                beginAtZero: true   // minimum value will be 0.
+            }
+        }]
+    }
+    
       }
     };
 
@@ -141,7 +169,41 @@
       var ctx = document.getElementById('pie-chart').getContext('2d');
       window.myPie = new Chart(ctx, config);
     };
-
+    
+    function expandtable(n){
+        const btn = document.getElementById('btn-expand');
+        var td = document.getElementById('inv-groups');
+        if (n==2){
+            td = document.getElementById('inv-expired');
+        }
+        if (td.style.display == 'block'){
+            td.style.display = 'none';
+            btn.value = 'Collapse';
+        }else{
+            td.style.display = 'block';
+            btn.value = 'Show Groups';
+        }
+    }
+    
+    const btn1 = document.getElementById("btn-expand1");
+    const btn2 = document.getElementById("btn-expand2");
+    
+    btn1.addEventListener("click", ()=>{
+        if(btn1.value == "Hide"){
+            btn1.value = "Show Groups";
+        } else {
+             btn1.value = "Hide";
+        }
+    })
+    
+    btn2.addEventListener("click", ()=>{
+        if(btn2.value == "Hide"){
+            btn2.value = "Show Expired Items";
+        } else {
+             btn2.value = "Hide";
+        }
+    })
+    
   </script>
 
 {% endblock %}

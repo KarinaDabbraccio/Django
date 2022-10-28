@@ -66,7 +66,7 @@ def cart_detail(request):
                     print()
                     msg = "The product is not enought in stock: " + product_cart.name
                     print(msg)
-                    return render(request, 'orders/order_new.html', {'cart': cart, 'form': form, 'msg':msg})
+                    return render(request, 'orders/cart_order.html', {'cart': cart, 'form': form, 'msg':msg})
                     
                 else:    
                     # add to list to remove from the inventory 

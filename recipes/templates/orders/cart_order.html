@@ -4,28 +4,32 @@
     Your shopping cart
 {% endblock %}
 {% block content %}
+    <br>
     <h2>Shopping cart</h2>
 	<p>File: cart_order.html</p>
-	<p>     
-        <nav class="button"><ul><li><a class="lighttext" href="{% url 'home' %}">Continue shopping</a></li><ul></nav>
-        {% if cart.get_total_price > 0 %}
-            {% if user.is_authenticated %}
-              <nav class="button"><ul><li><a class="lighttext" href="#submit_order" class="button">Order</a></li><ul></nav>
-            {% else %}
-              <h3>You need to <a href="{% url 'login' %}">login</a> or <a href="{% url 'accounts:signup' %}">signup</a> to order your products.</h3>
-            {% endif %}
-        {% else %}
-            <h3>You don't have items to order.</h3>
+    
+    <p>     
+        <nav class="button"><ul><li><a class="lighttext" href="{% url 'home' %}">Continue shopping</a></li>
+        {% if cart.get_total_price > 0 and user.is_authenticated %}
+              <li><a class="lighttext" href="#submit_order" class="button">Order</a></li>
+              <ul></nav>
+        {% elif cart.get_total_price == 0 %}
+              <ul></nav>
+              <h3>You don't have items to order.</h3>
+        {% elif not user.is_authenticated %}
+            <ul></nav>
+            <h3>You need to <a href="{% url 'login' %}">login</a> or <a href="{% url 'accounts:signup' %}">signup</a> to order your products.</h3>
         {% endif %}
     </p>
+    
     <table class="cart">
         <thead>
         <tr>
             <th>Product</th>
             <th>Quantity</th>
-            <th>Remove</th>
             <th>Unit price</th>
             <th>Price</th>
+            <th class="centered_text">Remove</th>
         </tr>
         </thead>
         <tbody>
@@ -34,16 +38,23 @@
                 <tr>
                     <td>{{ product.name }}</td>
                     <td>{{ item.quantity }}</td>
-                    <td><a href="{% url 'orders:cart_remove' product.id%}">Remove</a></td>
                     <td>${{ item.price }}</td>
                     <td>${{ item.total_price }}</td>
+                    <td class="centered_text"><a href="{% url 'orders:cart_remove' product.id%}">  
+                    
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+  <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+  <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+  </svg>
+  
+                    </a></td>
                 </tr>
             {% endwith %}
         {% endfor %}
         <tr>
             <td>Total</td>
             <td colspan="3"></td>
-            <td>${{ cart.get_total_price }}</td>
+            <td class="centered_text">${{ cart.get_total_price }}</td>
         </tr>
         {% if discount > 0 %}
         <tr>
@@ -59,11 +70,24 @@
         {% endif %}
         </tbody>
     </table>
+    
+     <p>     
+         <nav class="button"><ul>
+         {% if cart.get_total_price > 0 and user.is_authenticated %}
+               <li><a class="lighttext" href="#submit_order" class="button">Order</a></li><ul></nav>
+         {% elif cart.get_total_price > 0 and not user.is_authenticated %}
+         <h3>You need to <a href="{% url 'login' %}">login</a> or <a href="{% url 'accounts:signup' %}">signup</a> to order your products.</h3>
+         {% endif %}
+     </p>
+    
+    <br>
+    <h3>{{ msg }}</h3>
 {% endblock %}
 
 {% block content-2 %}
 {% if user.is_authenticated %}
 <h2 id="submit_order">Submit Order</h2>
+
 <div class="order-info">
 	<ul>
       {% for item in cart %}
@@ -85,11 +109,11 @@
     <p class="centered_text"><button type="submit">Submit Order</button></p>
     {% csrf_token %}
   </form>
+  <div class="spaces"></div>
 {% else %}
 <br>
   <h3>You don't have items to order</h3>
 {% endif %}
 
-<h3>{{ msg }}</h3>
 {% endif %}
 {% endblock %}

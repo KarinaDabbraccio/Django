@@ -46,6 +46,7 @@ def my_account_view(request):
     orders = Order.objects.filter(user=request.user).order_by('-date_ordered')
     total = 0
     discount = request.user.profile.user_discount
+    n_discount = 0;
 
     #if still less than max discount
     if discount < MAX_DISCOUNT:
@@ -57,13 +58,15 @@ def my_account_view(request):
             n_discount = MAX_DISCOUNT
         elif total >= AMOUNT_FOR_AVER_DISCOUNT:
             n_discount = AVER_DISCOUNT
-        if discount!= n_discount:
+        if discount!= n_discount and discount < n_discount:
             discount = n_discount
             request.user.profile.user_discount = discount
             request.user.profile.save()
            
     if discount > 0:
-        message = "Your discount is " + str(discount) +"%"
+        message = "Discount is " + str(discount) +"%"
+    else:
+        message = "Spend $" + str(AMOUNT_FOR_AVER_DISCOUNT - total) +" more to get a customer discount."
         
     #pagination for orders - now 3 because don't have much
     page = request.GET.get('page', 1)

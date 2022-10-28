@@ -5,9 +5,16 @@
 {% endblock %}
 
 {% block content %}
+  <br>
   <h2>Categories</h2>
-  <p>File : addrecipe</p>
+  <br>
   <p>Here the categories for the recipes will be posted. Categories are created by admin only.</p>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
+  quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo 
+  consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse 
+  cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat 
+  non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
   <p><a href="https://www.transamericainstitute.org/health-wellness/cookbooks?gclid=CjwKCAjw7vuUBhBUEiwAEdu2pJzOr7lphMU6at7dHCa_aRMGVJQlo9gEXOs3zVK746z8qFf65tNgFhoCQ1UQAvD_BwE">This book</a></p>
   {% if categories %}
   <table>
@@ -24,22 +31,22 @@
 	<tr>
       <td>
         <a href="{% url 'addrecipe:category_recipes' category.pk %}">{{ category.name }}</a>
-        <small class="">{{ category.description }}</small>
+        <div class="topmenu small-text">{{ category.description }}</div>
       </td>
 	  <td class="centered_text">{{ category.recipes.count }}</td>
       <td class="centered_text">{{ category.get_comments_count }}</td>
       <td>
 	    {% with comment=category.get_last_comment %}
             {% if comment %}
-			  <small>
+			  <div class="topmenu small-text">
 				<a href="{% url 'addrecipe:recipe_comments' category.pk comment.recipe.pk %}">
-				By {{ comment.created_by.username }} at {{ comment.created_at }}
+				By {{ comment.created_by.username }} at {{ comment.created_at | date:"Y-m-d"  }}
 				</a>
-			  </small>
+			  </div>
 			{% else %}
-			  <small>
+			  <div class="small-text">
 				<em>No comments yet.</em>
-			  </small>
+			  </div>
 			{% endif %}
         {% endwith %}
 	  </td>

@@ -7,12 +7,19 @@
 
 <nav class="navbutton">
 	<ul>
-	  <li><a href="{% url 'sales:all_orders' %}">All Orders</a></li>
 	  <li><a href="{% url 'inventory:manage_inv' %}">Inventory</a></li>
 	</ul>
 </nav>
 
 <h3>Ordered Items Summary</h3>
+
+<nav class="button">
+    <ul>
+        <li><a class="lighttext" id="btn-expand1" onclick="expandtable(2)">Show table</a></li>
+    <ul>
+</nav>
+
+<div id="hide-it" style="display:none">
 
 <table class="table">
     <thead class="thead">
@@ -33,6 +40,8 @@
       {% endfor %}
     </tbody>
 </table>
+
+</div>
 
 <div id="container" style="width: 80%;">
     <canvas id="pie-chart"></canvas>
@@ -123,6 +132,26 @@
       var ctx = document.getElementById('pie-chart').getContext('2d');
       window.myPie = new Chart(ctx, config);
     };
+    
+    function expandtable(){
+        var td = document.getElementById('hide-it');
+        if (td.style.display == 'block'){
+            td.style.display = 'none';
+        }else{
+            td.style.display = 'block';
+        }
+    }
+    
+    const btn = document.getElementById("btn-expand");
+
+    btn.addEventListener("click", ()=>{
+
+        if(btn.value == "Hide"){
+            btn.value = "Show table";
+        } else {
+             btn.value = "Hide";
+        }
+    })
 
   </script>
 

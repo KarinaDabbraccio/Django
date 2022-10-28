@@ -26,6 +26,10 @@ def manage_inv(request):
         
         groups_inventory_list=dict()        
         total_cost=0
+        total_cost_expired=0
+        
+        for item in expired:
+            total_cost_expired+=item.cost * item.amount
         
         for item in items:
             product=item.product
@@ -53,6 +57,7 @@ def manage_inv(request):
     return render(request, 'inventory/manage_inv.html', {'expired': expired,'items': items,
                                                          'groups_inventory_list': groups_inventory_list,
                                                          'total_cost': total_cost,
+                                                         'total_cost_expired': total_cost_expired,
                                                          'labels': labelsk,
                                                          'data': datak, })                
 

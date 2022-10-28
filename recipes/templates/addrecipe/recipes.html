@@ -6,45 +6,45 @@
 {% endblock %}
 
 {% block content %} 
+<br>
   <h2>{{ category.name }}</h2>
-    <p>File : recipes</p>
-	<p>{{category.description}}</p>
-	<nav class="navbutton">
+  <nav class="navbutton">
 	<ul>
 	  <li><a href="{% url 'addrecipe:add_recipe' %}">All categories</a></li>
 	  <li><a href="{% url 'addrecipe:new_recipe' category.pk %}" class="btn">New recipe</a></li>
   </nav>
+  <p>{{category.description}}</p>
 	
 {% endblock %}
 
 {% block content-2 %}
+    {% if recipes %}
     <table class="table">
     <thead class="thead">
       <tr>
         <th>Recipe Title</th>
-		<th>Recipe Description</th>
+		<th class="topmenu">Recipe Description</th>
         <th>Author</th>
         <th>Comments</th>
 		<th>Views</th>
         <th>Date posted</th>
       </tr>
     </thead>
-    
-     {% if recipes %}
     <tbody>
       {% for recipe in recipes %}
-        <tr>
+        <tr id="td-descr">
           <td><a href="{% url 'addrecipe:recipe_comments' category.pk recipe.pk %}">{{ recipe.subject }}</a></td>
-		  <td>{{ recipe.rec_description }}</td>
+		  <td class="topmenu small-text"><div id="td-descr">{{ recipe.rec_description }}</div></td>
           <td>{{ recipe.starter.username }}</td>
           <td class="centered_text">{{ recipe.replies }}</td>
 		  <td class="centered_text">{{ recipe.views }}</td>
-          <td>{{ recipe.last_updated|date }}</td>
+          <td><div class="small-text">{{ recipe.last_updated|date }}</div></td>
         </tr>
       {% endfor %}
     </tbody>
     
     {% else %}
+    <br>
         <p>You can be the first author in this category &#128525</p>
     {% endif %}
   </table>

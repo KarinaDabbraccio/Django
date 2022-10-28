@@ -4,6 +4,7 @@
     {{ product.name }}
 {% endblock %}
 {% block content %}
+<br>
     <h2>{{ product.name }}</h2>
 	<nav class="navbutton">
 		<ul>
@@ -14,8 +15,7 @@
         <div>
 			<img class="product_img" src="{{ product.pic.url }}">
 		</div>
-		<div>
-			<p>File: product_details</p>
+		<div class="p-desktop">
 			<p>Weight, lb: {{ product.weight }}</p>
 			<p>Price per unit: ${{ product.price }}</p><br>
 			<p>{{ product.description|linebreaks }}</p>
@@ -31,7 +31,12 @@
 		{% else %}
 		<p class="centered_text">You can not order this item, there's none of it left now</p>
 		{% endif %}
-		</div>	
+		</div>
+		
     </div>
-	
+	<div class="p-mobile">
+        <p>Weight, lb: {{ product.weight }}</p>
+        <p>Price per unit: ${{ product.price }}</p><br>
+        <p>{{ product.description|linebreaks }}</p>
+    <div>	
 {% endblock %}
