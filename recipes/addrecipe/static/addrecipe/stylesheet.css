@@ -251,7 +251,7 @@ form input, select, .form-input {
 	color: #450a0a;
 	line-height:1.5em;
     padding: 0 20px;
-    margin: 10px;
+    margin: 10px 0px 10px 0;
     border: 2px solid #E2F0CB;
 	border-radius: 5px;
 }

@@ -106,7 +106,7 @@
   <form action="." method="post" class="order-form">
     {% csrf_token %}
 	{{ form.as_p }}
-    <p class="centered_text"><button type="submit">Submit Order</button></p>
+    <button type="submit">Submit Order</button>
     {% csrf_token %}
   </form>
   <div class="spaces"></div>
