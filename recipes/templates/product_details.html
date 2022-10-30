@@ -5,38 +5,46 @@
 {% endblock %}
 {% block content %}
 <br>
-    <h2>{{ product.name }}</h2>
-	<nav class="navbutton">
-		<ul>
-		<li><a href="{% url 'group_products' product.group.pk %}">{{ product.group }}</a></li>
-		</ul>
-	</nav>
-	<div class="card-container p-details">
-        <div>
-			<img class="product_img" src="{{ product.pic.url }}">
-		</div>
-		<div class="p-desktop">
-			<p>Weight, lb: {{ product.weight }}</p>
-			<p>Price per unit: ${{ product.price }}</p><br>
-			<p>{{ product.description|linebreaks }}</p>
-		</div>
-		<div>
-		
-		{% if product.is_available > 0 %}		
-			<form class="add_cart" action="{% url 'orders:cart_add' product.id %}" method="post">
-			{{ cart_product_form }}
-			{% csrf_token %}
-			<p class="centered_text"><button type="submit">Add to cart</button></p>
-			</form>
-		{% else %}
-		<p class="centered_text">You can not order this item, there's none of it left now</p>
-		{% endif %}
-		</div>
-		
+<h2>{{ product.name }}</h2>
+<nav class="navbutton">
+  <ul>
+	<li><a href="{% url 'group_products' product.group.pk %}">{{ product.group }}</a></li>
+  </ul>
+</nav>
+<div class="card-container p-details">
+    <div>
+		<img class="product_img" src="{{ product.pic.url }}">
+	</div>
+	<div class="p-desktop">
+		<p>Weight, lb: {{ product.weight }}</p>
+		<p>Price per unit: ${{ product.price }}</p><br>
+		<p>{{ product.description|linebreaks }}</p>
+	</div>
+    <div>		
+      {% if product.is_available > 0 %}		
+      <form class="add_cart" action="{% url 'orders:cart_add' product.id %}" method="post">
+	    {{ cart_product_form }}
+	    {% csrf_token %}
+	    <button type="submit">Add to cart</button>
+      </form>
+      {% else %}
+      <p class="centered_text">You can not order this item, there's none of it left now</p>
+      {% endif %}
     </div>
-	<div class="p-mobile">
-        <p>Weight, lb: {{ product.weight }}</p>
-        <p>Price per unit: ${{ product.price }}</p><br>
-        <p>{{ product.description|linebreaks }}</p>
-    <div>	
+</div>
+
+<div class="p-mobile">
+    <p>Weight, lb: {{ product.weight }}</p>
+    <p>Price per unit: ${{ product.price }}</p><br>
+    <p>{{ product.description|linebreaks }}</p>
+</div>	
+    
+{% endblock %}
+
+{% block footer %}
+<div style="height:90px;"></div>
+<div class="footer">
+  <p>Author: </p>
+  <p><a class="lighttext" href="https://github.com/KarinaDabbraccio">Karina Dabbraccio</a></p>
+</div>
 {% endblock %}

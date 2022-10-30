@@ -44,10 +44,11 @@ html,body{
 
 /* --------------------------Base.html: header, footer ---*/
 header, footer {
-	background: darkolivegreen; /* #556B2F */
-	color:ivory;
+	background: #2a6592; /*darkolivegreen;  #556B2F */
+	color: #f6d8ac; /*ivory; */
 	padding:12px;
 	font-family: 'Quicksand', sans-serif; 
+	width: 100%;
 	
 }
 
@@ -68,14 +69,16 @@ h1{
 	font-size:36px;
 }
 
-footer{
-	font-size:18px; 
-	padding-bottom:12px;
-	position:absolute;
-	width: 100%;
-    bottom:0;
-    height:60px;
-
+.footer {
+  padding:10px;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #2a6592;;
+  color: white;
+  text-align: center;
+  z-index: 2;
 }
 
 .mobilemenu{
@@ -84,7 +87,7 @@ footer{
 
 h2, h3{
 	font-family: 'Quicksand', sans-serif;
-	color: darkolivegreen;
+	color: #2a6592;
 	padding-bottom:8px;
 	line-height:1.1;
 }
@@ -121,19 +124,19 @@ li{
 }	
 
 .navbutton ul{
-	margin: 20px 0;
-	padding-left:5%;
+	margin: 10px 0;
+	color:#2a6592;
 }
 
 .navbutton li a{
-	color:darkolivegreen;
+	color:#2a6592;
 }
 
 .button li a{
 	padding:8px;
 	text-decoration:none;
-	background: darkolivegreen;
-	border-radius: 5px;
+	background: #2a6592;
+	border-radius: 3px;
 	color:ivory;
 }
 
@@ -142,8 +145,8 @@ li{
 }
 
 .navbutton li a:hover{
-	background: olivedrab;	
-	border-radius: 5px;
+	background: #8ec3eb;	
+	border-radius: 3px;
 }
 /*-------------------------- Links ---------- */
 a.lighttext:visited {
@@ -159,11 +162,11 @@ a.lighttext:hover {
 }
 
 a:link {
-    color: darkgreen;
+    color: #2a6592;
 }
 
 a:visited {
-    color: #224422;
+    color: #003366;
 }
 
 a:active {
@@ -171,7 +174,7 @@ a:active {
 }
 
 a:hover {
-  color: green;
+  color: midnightblue;
 }
 
 /*-------------------------- Tables ---------- */
@@ -185,7 +188,7 @@ td, th {
 	}
 	
 td {
-    border-bottom: 2px solid #E2F0CB;
+    border-bottom: 2px solid #8ec3eb;
 	}
 	
 #td-descr {
@@ -202,7 +205,7 @@ th {
 	text-align:left;
 	font-family:'Quicksand', sans-serif;
 	font-size:18px;
-	background-color:darkolivegreen;
+	background-color:#2a6592;
 	color:ivory;
 	}
 	
@@ -233,9 +236,9 @@ form {
 	/* margin:10 auto 0; */
 	margin: 30px 0 60px;
     padding: 20px;
-    background: ivory;
-    border: 2px solid #E2F0CB;
-    border-radius: 5px;
+    background: #F3F8FC;
+    border: 2px solid #8ec3eb; /*#E2F0CB;*/
+    border-radius: 3px;
     text-align: left;
 	}
 
@@ -252,8 +255,8 @@ form input, select, .form-input {
 	line-height:1.5em;
     padding: 0 20px;
     margin: 10px 0px 10px 0;
-    border: 2px solid #E2F0CB;
-	border-radius: 5px;
+    border: 2px solid #8ec3eb;
+	border-radius: 3px;
 }
 .checkbox_form{
 	width: 200px;
@@ -288,7 +291,6 @@ form select {
 
 form input[type=text]:focus {
   border: 0px;
-  background:#F9FFF5;
 }
 
 form button{
@@ -296,8 +298,8 @@ form button{
 	font-size: 16px;
 	margin: 10px 0 0 0;
 	padding:10px;
-	background: darkolivegreen;
-	border-radius: 5px;
+	background: #2a6592;
+	border-radius: 3px;
 	border: 0;
 	color:ivory;
 }
@@ -327,22 +329,20 @@ form.profile_form button {
 .card-container {
   display: grid;
   grid-template-columns: 32% 32% 32%; 
-  width: 96%;
-  padding: 2%;
   margin: 0;
   gap:2%;
 }
 
 .card-2 {
-  grid-template-columns: 48% 48%; 
+  grid-template-columns: 49% 49%; 
   gap: 2%;
 
 }
 
 .grid-card-product {
   padding: 4%;
-  border: 2px solid #E2F0CB;
-  border-radius: 9px;
+  border: 2px solid #8ec3eb;
+  border-radius: 5px;
   background-color: #FFF;
   display: grid;
   grid-template-columns: auto auto;
@@ -358,7 +358,7 @@ form.profile_form button {
 .grid-img {
   width: 100%;
   height:270px;
-  border-radius: 9px;
+  border-radius: 5px;
   background-color: #CCDDFF;
   overflow:hidden;
   margin:0 0 15px;
@@ -399,8 +399,8 @@ img {
 .product_img{
 	max-height: 270px;
 	object-fit: cover;
-	border: 2px solid #E2F0CB;
-	border-radius:9px;
+	border: 2px solid #8ec3eb;
+	border-radius:5px;
 	max-width:100%;
 }
 
@@ -416,7 +416,7 @@ img {
 
 
 form.add_cart {
-	width:120px;
+	width:110px;
 	padding:10px 20px;
 	margin:0;
 }
@@ -491,13 +491,13 @@ form.add_cart select {
 		padding:10px;
 		width: 128px;
 		display:block;
-		background:darkolivegreen;
+		background:#2a6592;
 		border-radius: 3px;
 		border: 1px ivory solid;
 	}
 	
 	.submenu li a:hover{
-		background:olive;
+		background:blue;
 	}
 
 }

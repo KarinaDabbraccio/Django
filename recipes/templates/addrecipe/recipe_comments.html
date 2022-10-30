@@ -9,10 +9,11 @@
   <nav class="navbutton">
 	<ul>
 	  <li><a href="{% url 'addrecipe:add_recipe' %}">All categories</a></li>
-	  <li><a href="{% url 'addrecipe:category_recipes' recipe.category.pk %}">{{ recipe.category.name }}</a></li>
+	  <li>&gt; <a href="{% url 'addrecipe:category_recipes' recipe.category.pk %}">{{ recipe.category.name }}</a></li>
 	</ul>
   </nav>
-  <p>File : recipe_comments</p> 
+  <p>File : recipe_comments</p>
+  <p>Cooking time: {{ recipe.cooking_time }} minutes.</p><br> 
   <p>Description: {{ recipe.rec_description }}</p>
   
 {% endblock %}
@@ -20,7 +21,7 @@
 {% block content-2 %}
   <nav class="navbutton">
 	<ul>
-	  <li><a href="{% url 'addrecipe:reply_recipe' recipe.category.pk recipe.pk %}" class="btn" role="button">Reply</a></li>
+	  <li><a href="{% url 'addrecipe:reply_recipe' recipe.category.pk recipe.pk %}" class="btn" role="button">Add Comment</a></li>
 	</ul>
   </nav>
   <h3>Comments:</h3>
@@ -44,6 +45,13 @@
 <p>No comments yet.</p>
 {% endif %}
 
-
 <div class="spaces"></div>
+{% endblock %}
+
+{% block footer %}
+<div style="height:100px;"></div>
+<div class="footer">
+  <p>Author: </p>
+  <p><a class="lighttext" href="https://github.com/KarinaDabbraccio">Karina Dabbraccio</a></p>
+</div>
 {% endblock %}

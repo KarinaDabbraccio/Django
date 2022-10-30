@@ -6,7 +6,6 @@
 {% block content %}
     <br>
     <h2>Shopping cart</h2>
-	<p>File: cart_order.html</p>
     
     <p>     
         <nav class="button"><ul><li><a class="lighttext" href="{% url 'home' %}">Continue shopping</a></li>
@@ -116,4 +115,12 @@
 {% endif %}
 
 {% endif %}
+{% endblock %}
+
+{% block footer %}
+<div style="height:150px;"></div>
+<div class="footer">
+  <p>Author: </p>
+  <p><a class="lighttext" href="https://github.com/KarinaDabbraccio">Karina Dabbraccio</a></p>
+</div>
 {% endblock %}

@@ -10,8 +10,8 @@
   <nav class="navbutton">
     <ul>
 	  <li><a href="{% url 'addrecipe:add_recipe' %}">All categories</a></li>
-	  <li><a href="{% url 'addrecipe:category_recipes' recipe.category.pk %}">{{ recipe.category.name }}</a></li>
-	  <li><a href="{% url 'addrecipe:recipe_comments' recipe.category.pk recipe.pk %}">{{ recipe.subject }}</a></li>
+	  <li>&gt; <a href="{% url 'addrecipe:category_recipes' recipe.category.pk %}">{{ recipe.category.name }}</a></li>
+	  <li>&gt; <a href="{% url 'addrecipe:recipe_comments' recipe.category.pk recipe.pk %}">{{ recipe.subject }}</a></li>
     </ul>
   </nav>
   <p>File : reply_recipe</p>
@@ -23,7 +23,7 @@
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Post a reply</button>
+    <button type="submit">Post a Comment</button>
   </form>
 
   {% for comment in recipe.comments.all %}
@@ -37,10 +37,18 @@
       <div class="middle">
         <p>{{ comment.message }}</p>
         {% if comment.created_by == user %}
-        <p><a href="{% url 'addrecipe:reply_recipe' recipe.category.pk recipe.pk %}" class="small_btn">Reply</a></p>
+        <p><a href="{% url 'addrecipe:reply_recipe' recipe.category.pk recipe.pk %}" class="small_btn">Add Comment</a></p>
         {% endif %}
 	  </div>
 	</div>
   {% endfor %}
 <div class="spaces"></div>
+{% endblock %}
+
+{% block footer %}
+<div style="height:100px;"></div>
+<div class="footer">
+  <p>Author: </p>
+  <p><a class="lighttext" href="https://github.com/KarinaDabbraccio">Karina Dabbraccio</a></p>
+</div>
 {% endblock %}

@@ -7,22 +7,27 @@
 {% block content %}
 <br>
 <img src="{{ user.profile.pic.url }}" alt="{{ comment.created_by.username }}">
-<div class="inline_block"><h2>Account: {{ user.username }}</h2><br>
-<form class="profile_form" method="post" enctype="multipart/form-data">
+<div class="inline_block">
+    <h2 style="margin-left:20px;">Account: {{ user.username }}</h2><br>
+    <form class="profile_form" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Upload</button>
-        </form>
+    </form>
 </div>
-<nav class="navbutton">
-	<ul>
-	  <li><a class="lighttext" href="{% url 'accounts:password_change' %}">Change password</a></li>
-	  <li><a class="lighttext" href="{% url 'accounts:update_my_account' %}">Update Info</a></li>
+<div class="inline_block" style="vertical-align:top;margin:60px 0 0 10px;">
+    <p>{{ message }}<p>
+    <p>TOTAL SPENT: {{ total }}<p>
+    
+    <nav class="navbutton">
+    	<ul>
+    	  <li><a href="{% url 'accounts:password_change' %}">Change password</a></li>
+    	  <br>
+    	  <li style="margin-top:5px;"><a href="{% url 'accounts:update_my_account' %}">Update Info</a></li>
+    	</ul>
+    </nav>
+</div>
 
-	</ul>
-</nav>
-<p>{{ message }}<p>
-<p>TOTAL SPENT: {{ total }}<p>
 <br>
 <h3>My Orders:</h3>
 <table>
@@ -30,7 +35,7 @@
       <tr>
 		<th>Created at</th>
 		<th>Items</th>
-        <th>Amount</th>
+        <th class="p-desktop">Amount</th>
         <th>Paid</th>
         <th>Location</th>
         <th>Picked Up</th>
@@ -40,12 +45,12 @@
     <tbody>   
       {% for order in orders %}
         <tr>
-		  <td>{{ order.date_ordered }}</td>
+		  <td>{{ order.date_ordered | date:"Y-m-d" }}</td>
 		  <td class="small-txt"> {% for p in order.get_ordered_products %}
-				{{ p.product }} - {{ p.quantity }} ,    
-			  {% endfor %}	
+                        				{{ p.product }} - {{ p.quantity }} <br>    
+                    			  {% endfor %}	
 		  </td>
-          <td>${{ order.get_total }}</td>
+          <td class="p-desktop">${{ order.get_total }}</td>
           <td>${{ order.paid_amount }}</td>
           <td>{{ order.pickup_location }}</td>
           <td class="centered_text">{% if order.picked_up %} &#10004 {% else %} &#10006 {%endif%}</td>
@@ -77,10 +82,14 @@
       <li class="disabled"><span>&raquo;</span></li>
     {% endif %}
   </ul>
-  {% endif %}
-  
-  
-  <div class="spaces"></div>
+  {% endif %}  
 
+{% endblock %}
 
+{% block footer %}
+<div style="height:100px;"></div>
+<div class="footer">
+  <p>Author: </p>
+  <p><a class="lighttext" href="https://github.com/KarinaDabbraccio">Karina Dabbraccio</a></p>
+</div>
 {% endblock %}

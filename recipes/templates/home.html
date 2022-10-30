@@ -3,8 +3,8 @@
 {% load static %}
 
 {% block content %}
-
 {% if currentUser.user_group == 'M' %}
+<br>
 <nav class="navbutton">
 	<ul>
 	  <li><a href="{% url 'sales:all_orders' %}">All Orders</a></li>
@@ -13,8 +13,11 @@
 </nav>
 {% endif %}
 
-<p> User: {{ currentUser }}, {% if currentUser.user_group == 'M' %} 
-Manager {% else %} User {% endif %} view</p>
+<br>
+<p> Hello{% if currentUser != 'Anonymous' %} {{ currentUser }} {% endif %}!
+    {% if currentUser.user_group == 'M' %} You have acces to internal info.{% endif %}</p>
+<p>Explore <a href="{% url 'addrecipe:add_recipe' %}">recipes</a> from customers and add your own.</p>
+<br>
 {% endblock %}
 
 {% block content-2 %}
@@ -36,6 +39,15 @@ Manager {% else %} User {% endif %} view</p>
     <p>No categories are available.</p>
 {% endif %}
 
+{% endblock %}
+
+
+{% block footer %}
+<div style="height:110px;"></div>
+<div class="footer">
+  <p>Author: </p>
+  <p><a class="lighttext" href="https://github.com/KarinaDabbraccio">Karina Dabbraccio</a></p>
+</div>
 {% endblock %}
 
 {% block scripts %}

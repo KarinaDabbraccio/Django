@@ -15,7 +15,7 @@
 
 <nav class="button">
     <ul>
-        <li><a class="lighttext" id="btn-expand1" onclick="expandtable(2)">Show table</a></li>
+        <li><a class="lighttext" id="btn-expand" onclick="expandtable()">Show table</a></li>
     <ul>
 </nav>
 
@@ -68,8 +68,8 @@
           <td>{{ order.id }}</td>
 		  <td><a href="{% url 'sales:order_details' order.id %}">{{ order.date_ordered|date }}</a></td>
 		  <td class="small-txt"> {% for p in order.get_ordered_products %}
-				{{ p.product }} - {{ p.quantity }} ,    
-			  {% endfor %}	
+                    				{{ p.product }} - {{ p.quantity }} <br>    
+                    			  {% endfor %}	
 		  </td>
 		  <td>{{ order.get_total }}</td>
           <td>{{ order.paid_amount }}</td>
@@ -146,10 +146,10 @@
 
     btn.addEventListener("click", ()=>{
 
-        if(btn.value == "Hide"){
-            btn.value = "Show table";
-        } else {
-             btn.value = "Hide";
+        if(btn.text == "Hide table"){
+            btn.text = "Show table";
+        } else if(btn.text == "Show table"){
+             btn.text = "Hide table";
         }
     })
 
