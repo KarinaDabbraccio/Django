@@ -1,4 +1,6 @@
 # Django
+![image](https://user-images.githubusercontent.com/103450865/199138211-22d1d9d0-c5b2-4d37-b19a-c88e927d30da.png)
+
 1) accounts app:
     - user login, signup;
     - password change;
