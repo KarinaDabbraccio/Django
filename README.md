@@ -6,6 +6,11 @@ User views have desktop and mobile versions.
     - user login, signup;
     - password change;
     - Profile model to have users groups: Manager and User.
+    User would receive an alert if the username alredy exists after filling the username field. The default image is assigned and may be changed.
+    On the Account page user may see summary of orders, an option to update info, change password (for that, settings.py need to be updated to connect to a valid Google account).
+    ![image](https://user-images.githubusercontent.com/103450865/200011375-1abad45d-72a2-48e4-bdb8-3cccc269d652.png)
+    ![image](https://user-images.githubusercontent.com/103450865/200013496-3e073007-d42f-4392-8c65-9d395e7b6fa8.png)
+
 
 2) addrecipe app:
     - models: Category - new categories added by admin only;
@@ -25,7 +30,10 @@ User views have desktop and mobile versions.
     - add to cart at once limited by choice field (1-10 items), by availability of inventory(yes/no);
     - Order may be created only with the items that are available in the inventory;
     - each Order when created has total cost of the inventory ordered for further profit calculation.
-    - ![image](https://user-images.githubusercontent.com/103450865/199138606-adca7a59-c1e0-43c3-a1e3-99254e597456.png)
+     ![image](https://user-images.githubusercontent.com/103450865/199138606-adca7a59-c1e0-43c3-a1e3-99254e597456.png)
+![image](https://user-images.githubusercontent.com/103450865/200014768-3039ed5b-640a-4933-b203-906ff88a6f35.png)
+![image](https://user-images.githubusercontent.com/103450865/200015450-73cb0849-0565-480c-9793-d143ad9ca53e.png)
+
 
 5) inventory app:
     - access only for Manager;
