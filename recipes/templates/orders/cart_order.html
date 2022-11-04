@@ -74,8 +74,6 @@
          <nav class="button"><ul>
          {% if cart.get_total_price > 0 and user.is_authenticated %}
                <li><a class="lighttext" href="#submit_order" class="button">Order</a></li><ul></nav>
-         {% elif cart.get_total_price > 0 and not user.is_authenticated %}
-         <h3>You need to <a href="{% url 'login' %}">login</a> or <a href="{% url 'accounts:signup' %}">signup</a> to order your products.</h3>
          {% endif %}
      </p>
     
@@ -84,6 +82,7 @@
 {% endblock %}
 
 {% block content-2 %}
+
 {% if user.is_authenticated %}
 <h2 id="submit_order">Submit Order</h2>
 
@@ -98,6 +97,9 @@
     </ul>
     <p>Total: ${{ cart.get_total_price }}</p>
     <p>Your discount is: {{ discount }}%</p>
+    {% if discount == 0 %}
+    <p>Check your account page to know how to get a discount.</p>
+    {% endif %}
     <p>Total after discount is: ${{ to_pay }}</p>
 </div>
 
@@ -118,7 +120,7 @@
 {% endblock %}
 
 {% block footer %}
-<div style="height:150px;"></div>
+<div style="height:70px;"></div>
 <div class="footer">
   <p>Author: </p>
   <p><a class="lighttext" href="https://github.com/KarinaDabbraccio">Karina Dabbraccio</a></p>

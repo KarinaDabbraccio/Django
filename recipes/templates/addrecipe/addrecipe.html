@@ -2,6 +2,7 @@
 
 {% block head %}
     {% load static %}
+    {% block title %}Recipes{% endblock %}
 {% endblock %}
 
 {% block content %}
@@ -39,7 +40,7 @@
       <td>
 	    {% with comment=category.get_last_comment %}
             {% if comment %}
-			  <div class="topmenu small-text">
+			  <div class="small-text">
 				<a href="{% url 'addrecipe:recipe_comments' category.pk comment.recipe.pk %}">
 				By {{ comment.created_by.username }} at {{ comment.created_at | date:"Y-m-d"  }}
 				</a>

@@ -18,7 +18,7 @@ class Profile(models.Model):
     ]
     
     username = models.OneToOneField(User, on_delete=models.CASCADE)
-    pic = models.ImageField(upload_to='images/users', default = 'default.png')
+    pic = models.ImageField(upload_to='images/users', default = 'default.jpg')
     user_group = models.CharField(max_length=1, default = 'U', choices=USER_TYPE)
     user_discount = models.PositiveSmallIntegerField(default = 0);
     

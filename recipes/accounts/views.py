@@ -37,7 +37,7 @@ def validate_username(request):
         'is_taken': User.objects.filter(username__iexact=username).exists()
     }
     if data['is_taken']:
-        data['error_message'] = 'A user with THIS username already exists.'
+        data['error_message'] = 'A user with THIS username already exists. Please choose other username.'
     return JsonResponse(data)
     
 
@@ -66,7 +66,7 @@ def my_account_view(request):
     if discount > 0:
         message = "Discount is " + str(discount) +"%"
     else:
-        message = "Spend $" + str(AMOUNT_FOR_AVER_DISCOUNT - total) +" more to get a customer discount."
+        message = "Spend $" + str(AMOUNT_FOR_AVER_DISCOUNT - total) +" to get a customer discount."
         
     #pagination for orders - now 3 because don't have much
     page = request.GET.get('page', 1)
