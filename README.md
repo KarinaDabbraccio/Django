@@ -9,10 +9,13 @@ User views have desktop and mobile versions.
     - password change;
     - Profile model to have users groups: Manager and User.
     User would receive an alert if the username alredy exists after filling the username field. The default image is assigned and may be changed.
-    On the Account page user may see summary of orders, an option to update info, change password (for that, settings.py need to be updated to connect to a valid Google account).
+    On the Account page user may see summary of orders, an option to update info, change password (for that, settings.py need to be updated to connect to a valid Google account). If user updates their info, on Django admin their first and last name show up, and new email. By default, users have no access to sales and inventory pages.
     
     ![image](https://user-images.githubusercontent.com/103450865/200011375-1abad45d-72a2-48e4-bdb8-3cccc269d652.png)
+    
     ![image](https://user-images.githubusercontent.com/103450865/200013496-3e073007-d42f-4392-8c65-9d395e7b6fa8.png)
+    
+    ![image](https://user-images.githubusercontent.com/103450865/200021638-7f2517ff-8081-4088-90bd-b94d2a599d69.png) 
 
 
 2) addrecipe app:
@@ -59,6 +62,10 @@ User views have desktop and mobile versions.
     
 ![image](https://user-images.githubusercontent.com/103450865/199138674-7a644011-263a-4cea-b6cf-27a0fa1e41ff.png)
 
+![image](https://user-images.githubusercontent.com/103450865/200022115-f23b5020-5ab5-4469-8288-2aedcc57d496.png)
+
+
+
    
 6) sales app:
     - access for Manager users;
@@ -66,5 +73,11 @@ User views have desktop and mobile versions.
     - allows to update order as paid, shipped.
     
 ![image](https://user-images.githubusercontent.com/103450865/199138760-6fadff22-8389-4088-9fc3-cd503af869d7.png)
+
+7) Django admin 
+    - has some customized views for usability. 
+   
+![image](https://user-images.githubusercontent.com/103450865/200023097-d9097524-387c-473f-9b7b-cfe518997acc.png)
+
 
     
