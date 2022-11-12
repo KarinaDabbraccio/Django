@@ -1,4 +1,12 @@
 # Django
+
+![presentationDjango](https://user-images.githubusercontent.com/103450865/201493033-1831e850-1927-4124-abdb-286bbec0a48f.png)
+
+
+
+
+
+
 ![image](https://user-images.githubusercontent.com/103450865/199138211-22d1d9d0-c5b2-4d37-b19a-c88e927d30da.png)
 
 
